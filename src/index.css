@@ -1,30 +1,54 @@
-*{
-  box-sizing: border-box;
+* {
+	box-sizing: border-box;
 }
 
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, 
-pre, form, fieldset, input, textarea, p, blockquote, th, td{
-  padding : 0;
-  margin : 0;
-};
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+fieldset,
+input,
+textarea,
+p,
+blockquote,
+th,
+td {
+	padding: 0;
+	margin: 0;
+}
 
-fieldset, img {
-  border: 0
-};
+fieldset,
+img {
+	border: 0;
+}
 
-ol, ul, li{
-  list-style: none;
-};
+ol,
+ul,
+li {
+	list-style: none;
+}
 
 :focus {
-  outline: none
-};
+	outline: none;
+}
 
 body,
 input,
 textarea,
 select {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
-  color: #4c4c4c;
-};
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+	color: #4c4c4c;
+}

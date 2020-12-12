@@ -1,9 +1,5 @@
 import React from 'react';
 
-export default function WorkContainer(){
-    return(
-        <>
-            WorkContainer
-        </>
-    )
+export default function WorkContainer() {
+	return <>WorkContainer</>;
 }

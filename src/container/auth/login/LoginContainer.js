@@ -3,62 +3,71 @@ import { useHistory } from 'react-router-dom';
 
 import * as styled from './styled';
 
-export default function AuthLoginContainer(){
-    const history = useHistory();
-    
-    const [input, setInput] = useState({
-        companyNumber : '',
-        password : ''
-    });
+export default function AuthLoginContainer() {
+	const history = useHistory();
 
-    const onChange = useCallback((e) => {
-        const { name, value } = e.target;
-        setInput({
-            ...input,
-            [name] : value
-        });
-    },[input]);
-    
-    const onClick = useCallback(() => {
-        console.log(input)
-    });
+	const [input, setInput] = useState({
+		companyNumber: '',
+		password: '',
+	});
 
-    const onClickRegister = useCallback(() => {
-        history.push('/auth/register');
-    })
+	const onChange = useCallback(
+		(e) => {
+			const { name, value } = e.target;
+			setInput({
+				...input,
+				[name]: value,
+			});
+		},
+		[input],
+	);
 
-    return(
-        <styled.LoginContainer>
-            <styled.LoginWrapper>
-                <styled.LoginLogo>로그인</styled.LoginLogo>
+	const onClick = useCallback(() => {
+		console.log(input);
+	});
 
-                <styled.LoginForm onSubmit={e => e.preventDefault()}>
-                    <styled.LoginInputWrapper>
-                        <styled.LoginIcon>
-                            <i className="icon-envelope"></i>
-                        </styled.LoginIcon>
-                        <styled.LoginInput 
-                            name='companyNumber'
-                            onChange={onChange}
-                            placeholder='사번을 입력하세요'/>
-                    </styled.LoginInputWrapper>
+	const onClickRegister = useCallback(() => {
+		history.push('/auth/register');
+	});
 
-                    <styled.LoginInputWrapper>
-                        <styled.LoginIcon>
-                            <i className="icon-shield"></i>
-                        </styled.LoginIcon>
-                        <styled.LoginInput 
-                            type='password'
-                            name='password'
-                            onChange={onChange}
-                            placeholder='비밀번호를 입력하세요'/>
-                    </styled.LoginInputWrapper>
+	return (
+		<styled.LoginContainer>
+			<styled.LoginWrapper>
+				<styled.LoginLogo>로그인</styled.LoginLogo>
 
-                    <styled.LoginButton onClick={onClick}>로그인</styled.LoginButton>
+				<styled.LoginForm onSubmit={(e) => e.preventDefault()}>
+					<styled.LoginInputWrapper>
+						<styled.LoginIcon>
+							<i className="icon-envelope"></i>
+						</styled.LoginIcon>
+						<styled.LoginInput
+							name="companyNumber"
+							onChange={onChange}
+							placeholder="사번을 입력하세요"
+						/>
+					</styled.LoginInputWrapper>
 
-                    <styled.LoginToRegisterButton onClick={onClickRegister}>회원가입 하러 가기</styled.LoginToRegisterButton>
-                </styled.LoginForm>
-            </styled.LoginWrapper>
-        </styled.LoginContainer>
-    )
+					<styled.LoginInputWrapper>
+						<styled.LoginIcon>
+							<i className="icon-shield"></i>
+						</styled.LoginIcon>
+						<styled.LoginInput
+							type="password"
+							name="password"
+							onChange={onChange}
+							placeholder="비밀번호를 입력하세요"
+						/>
+					</styled.LoginInputWrapper>
+
+					<styled.LoginButton onClick={onClick}>
+						로그인
+					</styled.LoginButton>
+
+					<styled.LoginToRegisterButton onClick={onClickRegister}>
+						회원가입 하러 가기
+					</styled.LoginToRegisterButton>
+				</styled.LoginForm>
+			</styled.LoginWrapper>
+		</styled.LoginContainer>
+	);
 }
