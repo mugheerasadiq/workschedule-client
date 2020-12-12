@@ -1,9 +1,5 @@
 import React from 'react';
 
-export default function AdminUserPage(){
-    return(
-        <>
-            AdminUserPage
-        </>
-    )
+export default function AdminUserPage() {
+	return <>AdminUserPage</>;
 }

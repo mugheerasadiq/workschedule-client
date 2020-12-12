@@ -1,9 +1,5 @@
 import React from 'react';
 
-export default function AdminWorkPage(){
-    return(
-        <>
-            AdminWorkPage
-        </>
-    )
+export default function AdminWorkPage() {
+	return <>AdminWorkPage</>;
 }
