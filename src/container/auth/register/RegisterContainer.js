@@ -7,7 +7,7 @@ export default function AuthRegisterContainer(){
         name : '',
         password : ''
     });
-
+    // 테스트 init
     const onChange = useCallback((e) => {
         const { name, value } = e.target;
         setInput({
