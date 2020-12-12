@@ -19,7 +19,7 @@ export default function AuthRegisterContainer(){
     const onClick = useCallback(() => {
         window.alert(JSON.stringify(input));
     });
-    
+    // Issue
     return(
         <styled.RegisterContainer>
             <styled.RegisterWrapper>
