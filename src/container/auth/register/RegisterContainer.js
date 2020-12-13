@@ -1,4 +1,7 @@
 import React, { useState, useCallback } from 'react';
+
+import { AuthInput } from 'components';
+
 import * as styled from './styled';
 
 export default function AuthRegisterContainer() {
@@ -29,39 +32,25 @@ export default function AuthRegisterContainer() {
 				<styled.RegisterLogo>회원 가입</styled.RegisterLogo>
 
 				<styled.RegisterForm onSubmit={(e) => e.preventDefault()}>
-					<styled.RegisterInputWrapper>
-						<styled.RegisterIcon>
-							<i className="icon-envelope"></i>
-						</styled.RegisterIcon>
-						<styled.RegisterInput
-							name="companyNumber"
-							onChange={onChange}
-							placeholder="사번을 입력하세요"
-						/>
-					</styled.RegisterInputWrapper>
-
-					<styled.RegisterInputWrapper>
-						<styled.RegisterIcon>
-							<i className="icon-user"></i>
-						</styled.RegisterIcon>
-						<styled.RegisterInput
-							name="name"
-							onChange={onChange}
-							placeholder="이름을 입력하세요"
-						/>
-					</styled.RegisterInputWrapper>
-
-					<styled.RegisterInputWrapper>
-						<styled.RegisterIcon>
-							<i className="icon-shield"></i>
-						</styled.RegisterIcon>
-						<styled.RegisterInput
-							type="password"
-							name="password"
-							onChange={onChange}
-							placeholder="비밀번호를 입력하세요"
-						/>
-					</styled.RegisterInputWrapper>
+					<AuthInput
+						icon="icon-envelope"
+						name="companyNumber"
+						onChange={onChange}
+						placeholder="사번을 입력하세요"
+					/>
+					<AuthInput
+						icon="icon-user"
+						name="name"
+						onChange={onChange}
+						placeholder="이름을 입력하세요"
+					/>
+					<AuthInput
+						icon="icon-shield"
+						type="password"
+						name="password"
+						onChange={onChange}
+						placeholder="비밀번호를 입력하세요"
+					/>
 
 					<styled.RegisterButton onClick={onClick}>
 						회원가입

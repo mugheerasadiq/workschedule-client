@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { AuthInput } from 'components';
+
 import * as styled from './styled';
 
 export default function AuthLoginContainer() {
@@ -36,28 +38,19 @@ export default function AuthLoginContainer() {
 				<styled.LoginLogo>로그인</styled.LoginLogo>
 
 				<styled.LoginForm onSubmit={(e) => e.preventDefault()}>
-					<styled.LoginInputWrapper>
-						<styled.LoginIcon>
-							<i className="icon-envelope"></i>
-						</styled.LoginIcon>
-						<styled.LoginInput
-							name="companyNumber"
-							onChange={onChange}
-							placeholder="사번을 입력하세요"
-						/>
-					</styled.LoginInputWrapper>
-
-					<styled.LoginInputWrapper>
-						<styled.LoginIcon>
-							<i className="icon-shield"></i>
-						</styled.LoginIcon>
-						<styled.LoginInput
-							type="password"
-							name="password"
-							onChange={onChange}
-							placeholder="비밀번호를 입력하세요"
-						/>
-					</styled.LoginInputWrapper>
+					<AuthInput
+						icon="icon-envelope"
+						name="companyNumber"
+						onChange={onChange}
+						placeholder="사번을 입력하세요"
+					/>
+					<AuthInput
+						icon="icon-shield"
+						type="password"
+						name="password"
+						onChange={onChange}
+						placeholder="비밀번호를 입력하세요"
+					/>
 
 					<styled.LoginButton onClick={onClick}>
 						로그인
