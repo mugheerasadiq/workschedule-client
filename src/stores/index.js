@@ -6,6 +6,7 @@ import immutableTransform from 'redux-persist-transform-immutable';
 import auth from './auth';
 import user from './user';
 import work from './work';
+import times from './times';
 
 const persistConfig = {
 	transforms: [immutableTransform()],
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
 	auth,
 	user,
 	work,
+	times,
 });
 
 export default persistReducer(persistConfig, rootReducer);

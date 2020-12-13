@@ -14,10 +14,10 @@ export default function AuthRegisterContainer() {
 
 	const { done } = useSelector((state) => state?.auth?.toJS().register);
 
-	const { onRegister } = bindActionCreators(authActions, dispatch);
+	const { onRegister, onReset } = bindActionCreators(authActions, dispatch);
 
 	const [input, setInput] = useState({
-		email: '',
+		companyId: '',
 		name: '',
 		password: '',
 	});
@@ -38,9 +38,14 @@ export default function AuthRegisterContainer() {
 		onRegister(input);
 	});
 
+	const onClickLogin = useCallback(() => {
+		history.push('/auth/login');
+	});
+
 	useEffect(() => {
 		if (!done) return;
 		history.push('/auth/login');
+		onReset();
 	}, [done]);
 
 	// Issue
@@ -52,9 +57,9 @@ export default function AuthRegisterContainer() {
 				<styled.RegisterForm onSubmit={(e) => e.preventDefault()}>
 					<AuthInput
 						icon="icon-envelope"
-						name="email"
+						name="companyId"
 						onChange={onChange}
-						placeholder="이메일을 입력하세요"
+						placeholder="사번을 입력하세요"
 					/>
 					<AuthInput
 						icon="icon-user"
@@ -73,6 +78,9 @@ export default function AuthRegisterContainer() {
 					<styled.RegisterButton onClick={onClick}>
 						회원가입
 					</styled.RegisterButton>
+					<styled.RegisterToLoginButton onClick={onClickLogin}>
+						로그인 하기
+					</styled.RegisterToLoginButton>
 				</styled.RegisterForm>
 			</styled.RegisterWrapper>
 		</styled.RegisterContainer>

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 //redux
@@ -19,7 +19,9 @@ export default function AuthLoginContainer() {
 		password: '',
 	});
 
-	const { onLogin } = bindActionCreators(authActions, dispatch);
+	const { role } = useSelector((state) => state?.user?.toJS().logined?.user);
+
+	const { onLogin, onReset } = bindActionCreators(authActions, dispatch);
 
 	const onChange = useCallback(
 		(e) => {
@@ -34,11 +36,23 @@ export default function AuthLoginContainer() {
 
 	const onClick = useCallback(() => {
 		onLogin(input);
+		onReset();
 	});
 
 	const onClickRegister = useCallback(() => {
 		history.push('/auth/register');
 	});
+
+	/*
+	useEffect(() => {
+		if (!role) return null;
+		if (role === 'admin') {
+			history.push('/admin/work');
+		} else if (role === 'user') {
+			history.push('/');
+		}
+	}, [role]);
+	*/
 
 	return (
 		<styled.LoginContainer>
@@ -50,7 +64,7 @@ export default function AuthLoginContainer() {
 						icon="icon-envelope"
 						name="id"
 						onChange={onChange}
-						placeholder="아이디를 입력하세요"
+						placeholder="사번이나 이름을 입력하세요"
 					/>
 					<AuthInput
 						icon="icon-shield"
@@ -65,7 +79,7 @@ export default function AuthLoginContainer() {
 					</styled.LoginButton>
 
 					<styled.LoginToRegisterButton onClick={onClickRegister}>
-						회원가입 하러 가기
+						회원가입 하기
 					</styled.LoginToRegisterButton>
 				</styled.LoginForm>
 			</styled.LoginWrapper>

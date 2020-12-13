@@ -72,11 +72,13 @@ export const RegisterButton = styled.button`
 	cursor: pointer;
 `;
 
-export const LoginToRegisterButton = styled.p`
+export const RegisterToLoginButton = styled.p`
 	width: 100%;
 	margin-top: 17px;
 
 	text-align: center;
 
 	color: #999;
+
+	cursor: pointer;
 `;
