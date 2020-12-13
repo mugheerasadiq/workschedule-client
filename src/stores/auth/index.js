@@ -12,7 +12,7 @@ import { USER_TYPES } from '../user/type';
 import { authState } from './state';
 import { AUTH_TYPES } from './type';
 
-import * as authApi from '../../services/auth';
+import * as authApi from 'services/auth';
 
 const setUser = ({ dispatch, data }) => {
 	console.log(`setUser`, data);
