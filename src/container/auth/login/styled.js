@@ -68,6 +68,8 @@ export const LoginButton = styled.button`
 	-moz-border-radius: 5px;
 	-webkit-box-shadow: 0 3px rgba(58, 87, 175, 0.75);
 	-moz-box-shadow: 0 3px rgba(58, 87, 175, 0.75);
+
+	cursor: pointer;
 `;
 
 export const LoginToRegisterButton = styled.p`
@@ -77,4 +79,5 @@ export const LoginToRegisterButton = styled.p`
 	text-align: center;
 
 	color: #999;
+	cursor: pointer;
 `;
