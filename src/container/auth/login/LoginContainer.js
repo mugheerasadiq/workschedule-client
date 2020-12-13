@@ -1,17 +1,25 @@
 import React, { useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
+//redux
+import { useSelector, useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as authActions from 'stores/auth';
 import { AuthInput } from 'components';
 
 import * as styled from './styled';
 
 export default function AuthLoginContainer() {
 	const history = useHistory();
+	const dispatch = useDispatch();
 
 	const [input, setInput] = useState({
-		companyNumber: '',
+		id: '',
 		password: '',
 	});
+
+	const { onLogin } = bindActionCreators(authActions, dispatch);
 
 	const onChange = useCallback(
 		(e) => {
@@ -25,7 +33,7 @@ export default function AuthLoginContainer() {
 	);
 
 	const onClick = useCallback(() => {
-		console.log(input);
+		onLogin(input);
 	});
 
 	const onClickRegister = useCallback(() => {
@@ -40,9 +48,9 @@ export default function AuthLoginContainer() {
 				<styled.LoginForm onSubmit={(e) => e.preventDefault()}>
 					<AuthInput
 						icon="icon-envelope"
-						name="companyNumber"
+						name="id"
 						onChange={onChange}
-						placeholder="사번을 입력하세요"
+						placeholder="아이디를 입력하세요"
 					/>
 					<AuthInput
 						icon="icon-shield"

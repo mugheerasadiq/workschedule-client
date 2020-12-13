@@ -24,12 +24,9 @@ const onReset = ({ dispatch }) => {
 	return dispatch({ type: AUTH_TYPES.RESET });
 };
 
-export const onLogin = createPromiseThunk(
-	AUTH_TYPES.LOGIN,
-	authApi.login,
-	getAccessToken,
-	{ after: [setUser, onReset] },
-);
+export const onLogin = createPromiseThunk(AUTH_TYPES.LOGIN, authApi.login, {
+	after: [setUser, onReset],
+});
 
 export const onRegister = createPromiseThunk(
 	AUTH_TYPES.REGISTER,
@@ -46,8 +43,9 @@ export default handleActions(
 			const loadingState = createPromiseState.loading();
 			return createImmutableState(state, 'login', loadingState);
 		},
-		[AUTH_TYPES.LOGIN_DONE]: (state, _) => {
+		[AUTH_TYPES.LOGIN_DONE]: (state, action) => {
 			const doneState = createPromiseState.done();
+			console.log(action?.payload);
 			return createImmutableState(state, 'login', doneState);
 		},
 		[AUTH_TYPES.LOGIN_ERROR]: (state, action) => {

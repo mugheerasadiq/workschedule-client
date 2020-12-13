@@ -1,12 +1,23 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { useHistory } from 'react-router-dom';
 
 import { AuthInput } from 'components';
+import * as authActions from 'stores/auth';
 
 import * as styled from './styled';
 
 export default function AuthRegisterContainer() {
+	const history = useHistory();
+	const dispatch = useDispatch();
+
+	const { done } = useSelector((state) => state?.auth?.toJS().register);
+
+	const { onRegister } = bindActionCreators(authActions, dispatch);
+
 	const [input, setInput] = useState({
-		companyNumber: '',
+		email: '',
 		name: '',
 		password: '',
 	});
@@ -23,8 +34,15 @@ export default function AuthRegisterContainer() {
 	);
 
 	const onClick = useCallback(() => {
-		window.alert(JSON.stringify(input));
+		console.log('Register...');
+		onRegister(input);
 	});
+
+	useEffect(() => {
+		if (!done) return;
+		history.push('/auth/login');
+	}, [done]);
+
 	// Issue
 	return (
 		<styled.RegisterContainer>
@@ -34,9 +52,9 @@ export default function AuthRegisterContainer() {
 				<styled.RegisterForm onSubmit={(e) => e.preventDefault()}>
 					<AuthInput
 						icon="icon-envelope"
-						name="companyNumber"
+						name="email"
 						onChange={onChange}
-						placeholder="사번을 입력하세요"
+						placeholder="이메일을 입력하세요"
 					/>
 					<AuthInput
 						icon="icon-user"

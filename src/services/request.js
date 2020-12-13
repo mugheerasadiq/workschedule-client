@@ -39,7 +39,7 @@ export default class Request {
 	}
 
 	static getEndpoint() {
-		return 'http://localhost:8080';
+		return 'https://api-dev.rldnd.com';
 	}
 
 	static getAuthorizationHeader(accessToken) {
