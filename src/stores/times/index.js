@@ -1,5 +1,4 @@
 import { handleActions } from 'redux-actions';
-import { Map, List } from 'immutable';
 
 import { timesState } from './state';
 import { TIMES_TYPES } from './type';
