@@ -9,7 +9,7 @@ import {
 	AdminWorkPage,
 	AdminUserPage,
 	WorkPage,
-	SexPage,
+	CreateWorkPage,
 } from 'pages';
 
 export default function App() {
@@ -22,7 +22,8 @@ export default function App() {
 					<Route path="/auth" component={AuthLoginPage} />
 					<Route path="/admin/work" component={AdminWorkPage} />
 					<Route path="/admin/user" component={AdminUserPage} />
-					<Route path="/" component={SexPage} />
+					<Route path="/work/create" component={CreateWorkPage} />
+					<Route path="/" component={WorkPage} />
 				</Switch>
 			</Layout>
 		</LayoutView>
