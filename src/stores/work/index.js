@@ -17,16 +17,10 @@ export const onReset = ({ dispatch }) => {
 	dispatch(WORK_TYPES.RESET);
 };
 
-//pagination?
-
 export const onGetWorks = createPromiseThunk(
 	WORK_TYPES.GET_WORKS,
 	workApi.getWorks,
-);
-
-export const onGetWork = createPromiseThunk(
-	WORK_TYPES.GET_WORK,
-	workApi.getWork,
+	getAccessToken,
 );
 
 export const onUpdateWorks = createPromiseThunk(
@@ -40,7 +34,6 @@ export const onCreateWorks = createPromiseThunk(
 	WORK_TYPES.CREATE_WORKS,
 	workApi.createWorks,
 	getAccessToken,
-	{ after: [onReset] },
 );
 
 export const onDeleteWorks = createPromiseThunk(
@@ -66,18 +59,6 @@ export default handleActions(
 		[WORK_TYPES.GET_WORKS_ERROR]: (state, action) => {
 			const errorState = createPromiseState.error(action?.payload);
 			return createImmutableState(state, 'works', errorState);
-		},
-		[WORK_TYPES.GET_WORK]: (state, _) => {
-			const loadingState = createPromiseState.loading();
-			return createImmutableState(state, 'work', loadingState);
-		},
-		[WORK_TYPES.GET_WORK_DONE]: (state, action) => {
-			const doneState = createPromiseState.done(action?.payload);
-			return createImmutableState(state, 'work', doneState);
-		},
-		[WORK_TYPES.GET_WORK_ERROR]: (state, action) => {
-			const errorState = createPromiseState.error(action?.payload);
-			return createImmutableState(state, 'work', errorState);
 		},
 		[WORK_TYPES.CREATE_WORKS]: (state, _) => {
 			const loadingState = createPromiseState.loading();
