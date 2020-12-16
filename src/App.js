@@ -12,18 +12,25 @@ import {
 	CreateWorkPage,
 } from 'pages';
 
+import { PcLayout } from 'ui';
+
 export default function App() {
 	return (
 		<LayoutView>
 			<Layout>
 				<Switch>
-					<Route path="/auth/login" component={AuthLoginPage} />
-					<Route path="/auth/register" component={AuthRegisterPage} />
-					<Route path="/auth" component={AuthLoginPage} />
-					<Route path="/admin/work" component={AdminWorkPage} />
-					<Route path="/admin/user" component={AdminUserPage} />
-					<Route path="/work/create" component={CreateWorkPage} />
-					<Route path="/" component={WorkPage} />
+					<Route exact path="/auth/login" component={AuthLoginPage} />
+					<Route
+						exact
+						path="/auth/register"
+						component={AuthRegisterPage}
+					/>
+					<Route
+						exact
+						path="/work/create"
+						component={CreateWorkPage}
+					/>
+					<Route exact path="/" component={WorkPage} />
 				</Switch>
 			</Layout>
 		</LayoutView>
