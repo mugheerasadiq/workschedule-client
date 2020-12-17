@@ -72,6 +72,20 @@ export const LoginButton = styled.button`
 	cursor: pointer;
 `;
 
+export const LoginError = styled.div`
+	width: 100%;
+	padding-top: 30px;
+
+	color: rgba(255, 0, 0, 0.8);
+	font-size: 16px;
+	font-weight: 500;
+
+	text-align: center;
+	& + & {
+		padding-top: 0px !important;
+	}
+`;
+
 export const LoginToRegisterButton = styled.p`
 	width: 100%;
 	margin-top: 17px;
