@@ -21,6 +21,8 @@ export const PcHeader = styled(Header)`
 	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: center;
+
+	padding: 0 30px !important;
 `;
 
 export const LogoutButton = styled(Popconfirm)``;
@@ -28,7 +30,7 @@ export const LogoutButton = styled(Popconfirm)``;
 export const ConfirmAlert = styled.a``;
 
 export const LogoutIcon = styled(UserDeleteOutlined)`
-	font-size: 25px;
+	font-size: 20px;
 	color: white;
 `;
 
@@ -36,7 +38,6 @@ export const PcLogo = styled(Link)`
 	font-size: 27px;
 	font-weight: bold;
 	font-family: 'S-CoreDream-3Light';
-
 	color: white;
 `;
 
