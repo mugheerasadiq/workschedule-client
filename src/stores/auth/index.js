@@ -4,7 +4,6 @@ import {
 	createImmutableState,
 	createPromiseThunk,
 	createPromiseState,
-	getAccessToken,
 } from '../redux';
 
 import { USER_TYPES } from '../user/type';
@@ -19,27 +18,32 @@ const setUser = ({ dispatch, data }) => {
 	return dispatch({ type: USER_TYPES.SET_LOGINED, payload: data });
 };
 
+const setReset = ({ dispatch, _ }, payload) => {
+	return dispatch({ type: AUTH_TYPES.RESET, payload });
+};
+
 export const onReset = createAction(AUTH_TYPES.RESET);
 export const onLogin = createPromiseThunk(AUTH_TYPES.LOGIN, authApi.login, {
-	after: [setUser],
+	after: [setUser, (props) => setReset(props, 'login')],
 });
 export const onRegister = createPromiseThunk(
 	AUTH_TYPES.REGISTER,
 	authApi.register,
+	{ after: [setReset, (props) => setReset(props, 'register')] },
 );
 
 export default handleActions(
 	{
-		[AUTH_TYPES.RESET]: (state, _) => {
-			return authState;
+		[AUTH_TYPES.RESET]: (state, action) => {
+			const type = action.payload;
+			return state.set(type, authState.get(type));
 		},
 		[AUTH_TYPES.LOGIN]: (state, _) => {
 			const loadingState = createPromiseState.loading();
 			return createImmutableState(state, 'login', loadingState);
 		},
-		[AUTH_TYPES.LOGIN_DONE]: (state, action) => {
+		[AUTH_TYPES.LOGIN_DONE]: (state, _) => {
 			const doneState = createPromiseState.done();
-			console.log(action?.payload);
 			return createImmutableState(state, 'login', doneState);
 		},
 		[AUTH_TYPES.LOGIN_ERROR]: (state, action) => {

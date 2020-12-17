@@ -12,7 +12,10 @@ export default function AuthRegisterContainer() {
 	const history = useHistory();
 	const dispatch = useDispatch();
 
-	const { done } = useSelector((state) => state?.auth?.toJS().register);
+	const { done, role } = useSelector((state) => ({
+		done: state?.auth?.toJS().register?.done,
+		role: state?.user?.toJS().logined?.user?.role,
+	}));
 
 	const { onRegister, onReset } = bindActionCreators(authActions, dispatch);
 

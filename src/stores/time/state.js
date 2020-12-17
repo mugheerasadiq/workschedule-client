@@ -1,7 +1,7 @@
 import { Map } from 'immutable';
 import { initialState } from '../state';
 
-export const timesState = Map({
+export const timeState = Map({
 	categories: initialState.list,
 	tags: initialState.list,
 	created: initialState.object,

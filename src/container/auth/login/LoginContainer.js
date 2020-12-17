@@ -19,9 +19,9 @@ export default function AuthLoginContainer() {
 		password: '',
 	});
 
-	const { role } = useSelector((state) => state?.user?.toJS().logined?.user);
+	const { done, error } = useSelector((state) => state?.auth?.toJS().login);
 
-	const { onLogin, onReset } = bindActionCreators(authActions, dispatch);
+	const { onLogin } = bindActionCreators(authActions, dispatch);
 
 	const onChange = useCallback(
 		(e) => {
@@ -36,23 +36,16 @@ export default function AuthLoginContainer() {
 
 	const onClick = useCallback(() => {
 		onLogin(input);
-		onReset();
-	});
+	}, [input]);
 
 	const onClickRegister = useCallback(() => {
 		history.push('/auth/register');
-	});
+	}, []);
 
-	/*
 	useEffect(() => {
-		if (!role) return null;
-		if (role === 'admin') {
-			history.push('/admin/work');
-		} else if (role === 'user') {
-			history.push('/');
-		}
-	}, [role]);
-	*/
+		if (!done) return;
+		history.push('/work');
+	}, [done]);
 
 	return (
 		<styled.LoginContainer>
@@ -77,6 +70,17 @@ export default function AuthLoginContainer() {
 					<styled.LoginButton onClick={onClick}>
 						로그인
 					</styled.LoginButton>
+					{error !== null && (
+						<>
+							<styled.LoginError>
+								아이디 비밀번호 오류
+							</styled.LoginError>
+							<styled.LoginError>혹은</styled.LoginError>
+							<styled.LoginError>
+								관리자 승인이 되지 않았습니다.
+							</styled.LoginError>
+						</>
+					)}
 
 					<styled.LoginToRegisterButton onClick={onClickRegister}>
 						회원가입 하기

@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { PcHeader } from 'ui';
 
 export default function WorkContainer() {
-	return <>WorkContainer</>;
+	return (
+		<>
+			<PcHeader />
+			WorkContainer
+		</>
+	);
 }

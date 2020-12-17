@@ -1,36 +1,57 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import {
 	AuthLoginPage,
 	AuthRegisterPage,
-	AdminWorkPage,
-	AdminUserPage,
-	WorkPage,
 	CreateWorkPage,
+	WorkPage,
+	AdminTimePage,
 } from 'pages';
 
 import { PcLayout } from 'ui';
 
 export default function App() {
+	const { role } = useSelector((state) => state?.user?.toJS().logined?.user);
+
+	const PrivateRoute = ({ Component, path }) => {
+		return (
+			<Route
+				exact
+				path={path}
+				render={() => {
+					const isAuthenticated = role && role === 'admin';
+					return isAuthenticated ? (
+						<Component />
+					) : (
+						<Redirect to="/auth/login" />
+					);
+				}}
+			/>
+		);
+	};
+
 	return (
 		<LayoutView>
 			<Layout>
 				<Switch>
-					<Route exact path="/auth/login" component={AuthLoginPage} />
+					<Route path="/auth/register" component={AuthRegisterPage} />
+					<Route path="/auth/login" component={AuthLoginPage} />
+					<Route path="/work" component={WorkPage} />
 					<Route
 						exact
-						path="/auth/register"
-						component={AuthRegisterPage}
+						path="/"
+						render={() => <Redirect to="/auth/login" />}
 					/>
-					<Route
-						exact
-						path="/work/create"
-						component={CreateWorkPage}
-					/>
-					<Route exact path="/" component={WorkPage} />
+					<PcLayout>
+						<PrivateRoute
+							Component={AdminTimePage}
+							path="/admin/time"
+						/>
+					</PcLayout>
 				</Switch>
 			</Layout>
 		</LayoutView>

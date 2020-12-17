@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
+import { Layout, Menu, Popconfirm } from 'antd';
+import { UserDeleteOutlined } from '@ant-design/icons';
 import 'antd.css';
-
-import { Layout, Menu } from 'antd';
 
 import { Link } from 'react-router-dom';
 
@@ -16,7 +16,29 @@ export const LayoutWrapper = styled(Layout)`
 		`}
 `;
 
-export const PcHeader = styled(Header)``;
+export const PcHeader = styled(Header)`
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+`;
+
+export const LogoutButton = styled(Popconfirm)``;
+
+export const ConfirmAlert = styled.a``;
+
+export const LogoutIcon = styled(UserDeleteOutlined)`
+	font-size: 25px;
+	color: white;
+`;
+
+export const PcLogo = styled(Link)`
+	font-size: 27px;
+	font-weight: bold;
+	font-family: 'S-CoreDream-3Light';
+
+	color: white;
+`;
 
 export const PcSider = styled(Sider)`
 	width: 200px;
