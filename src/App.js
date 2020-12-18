@@ -38,9 +38,13 @@ export default function App() {
 		<LayoutView>
 			<Layout>
 				<Switch>
-					<Route path="/auth/register" component={AuthRegisterPage} />
-					<Route path="/auth/login" component={AuthLoginPage} />
-					<Route path="/work" component={WorkPage} />
+					<Route
+						exact
+						path="/auth/register"
+						component={AuthRegisterPage}
+					/>
+					<Route exact path="/auth/login" component={AuthLoginPage} />
+					<Route exact path="/work" component={WorkPage} />
 					<Route
 						exact
 						path="/"
