@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 
+// redux
 import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import * as timeActions from 'stores/time';
 
 export default function AdminTimeContainer() {
@@ -13,15 +13,11 @@ export default function AdminTimeContainer() {
 		data: state?.times?.toJS().tags?.data,
 	}));
 
-	const {
-		onGetCategories,
-		onCreateCategory,
-		onUpdateCategory,
-		onDeleteCategory,
-		onCreateTag,
-		onUpdateTag,
-		onDeleteTag,
-	} = bindActionCreators(timeActions, dispatch);
+	const { onGetCategories } = bindActionCreators(timeActions, dispatch);
 
-	return <>AdminTimeContainer</>;
+	useEffect(() => {
+		onGetCategories();
+	}, []);
+
+	return <>Time Container</>;
 }
