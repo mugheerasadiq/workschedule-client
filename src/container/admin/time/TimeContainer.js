@@ -8,6 +8,11 @@ import * as timeActions from 'stores/time';
 export default function AdminTimeContainer() {
 	const dispatch = useDispatch();
 
+	const { timeCategories, data } = useSelector((state) => ({
+		timeCategories: state?.times?.toJS().categories?.data?.timeCategories,
+		data: state?.times?.toJS().tags?.data,
+	}));
+
 	const {
 		onGetCategories,
 		onCreateCategory,
@@ -17,11 +22,6 @@ export default function AdminTimeContainer() {
 		onUpdateTag,
 		onDeleteTag,
 	} = bindActionCreators(timeActions, dispatch);
-
-	const { timeCategories, data } = useSelector((state) => ({
-		timeCategories: state?.times?.toJS().categories?.data?.timeCategories,
-		data: state?.times?.toJS().tags?.data,
-	}));
 
 	return <>AdminTimeContainer</>;
 }
