@@ -12,10 +12,7 @@ export default function AuthRegisterContainer() {
 	const history = useHistory();
 	const dispatch = useDispatch();
 
-	const { done, role } = useSelector((state) => ({
-		done: state?.auth?.toJS().register?.done,
-		role: state?.user?.toJS().logined?.user?.role,
-	}));
+	const done = useSelector((state) => state?.auth?.toJS().register?.done);
 
 	const { onRegister, onReset } = bindActionCreators(authActions, dispatch);
 
@@ -47,7 +44,7 @@ export default function AuthRegisterContainer() {
 
 	useEffect(() => {
 		if (!done) return;
-		history.push('/auth/login');
+		history.replace('/auth/login');
 		onReset();
 	}, [done]);
 

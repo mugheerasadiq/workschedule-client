@@ -18,8 +18,6 @@ export const PcHeader = styled(Header)`
 	padding: 0 30px !important;
 `;
 
-export const ButtonWrapper = styled.div``;
-
 export const IconButton = styled(Popconfirm)``;
 
 export const ConfirmAlert = styled.a``;
