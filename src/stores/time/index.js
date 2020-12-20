@@ -12,29 +12,10 @@ import {
 
 import * as timeApi from 'services/time';
 
-const setTags = ({ dispatch, data }) => {
-	let tags = [];
-
-	const categories = data?.timeCategories;
-	if (categories.length > 0) {
-		categories.forEach((category) => {
-			const timeTags = category?.timeTags;
-			if (timeTags.length > 0) {
-				timeTags.forEach((tag) => {
-					tags.push(tag);
-				});
-			}
-		});
-	}
-	console.log('setTags...', tags);
-	dispatch({ type: TIME_TYPES.SET_TAGS, payload: tags });
-};
-
 export const onGetCategories = createPromiseThunk(
 	TIME_TYPES.GET_CATEGORIES,
 	timeApi.getCategories,
 	getAccessToken,
-	{ after: [setTags] },
 );
 
 export const onCreateCategory = createPromiseThunk(
@@ -52,6 +33,12 @@ export const onUpdateCategory = createPromiseThunk(
 export const onDeleteCategory = createPromiseThunk(
 	TIME_TYPES.DELETE_CATEGORY,
 	timeApi.deleteCategory,
+	getAccessToken,
+);
+
+export const onGetTags = createPromiseThunk(
+	TIME_TYPES.GET_TAGS,
+	timeApi.getTags,
 	getAccessToken,
 );
 
@@ -127,6 +114,18 @@ export default handleActions(
 			return state
 				.setIn(['tags', 'done'], true)
 				.setIn(['tags', 'data'], action?.payload);
+		},
+		[TIME_TYPES.GET_TAGS]: (state, _) => {
+			const loadingState = createPromiseState.loading();
+			return createImmutableState(state, 'tags', loadingState);
+		},
+		[TIME_TYPES.GET_TAGS_DONE]: (state, action) => {
+			const doneState = createPromiseState.done(action?.payload);
+			return createImmutableState(state, 'tags', doneState);
+		},
+		[TIME_TYPES.GET_TAGS_ERROR]: (state, action) => {
+			const errorState = createPromiseState.error(action?.payload);
+			return createImmutableState(state, 'tags', errorState);
 		},
 		[TIME_TYPES.CREATE_TAG]: (state, _) => {
 			const loadingState = createPromiseState.loading();

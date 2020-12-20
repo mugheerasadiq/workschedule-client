@@ -7,8 +7,8 @@ import AuthRegisterPage from './register';
 export default function AuthPage() {
 	return (
 		<Switch>
-			<Route to="/auth/login" component={AuthLoginPage} />
-			<Route to="/auth/register" component={AuthRegisterPage} />
+			<Route exact path="/auth/login" component={AuthLoginPage} />
+			<Route exact path="/auth/register" component={AuthRegisterPage} />
 		</Switch>
 	);
 }

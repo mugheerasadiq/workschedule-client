@@ -6,9 +6,7 @@ import { Loading } from 'components';
 import { AuthLoginContainer } from 'container';
 
 export default function AuthLoginPage() {
-	const { loading } = useSelector(
-		(state) => state?.auth?.toJS().login.loading,
-	);
+	const { loading } = useSelector((state) => state?.auth?.toJS().login);
 
 	return (
 		<>

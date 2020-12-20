@@ -4,7 +4,7 @@ import * as styled from './styled';
 import { useSelector } from 'react-redux';
 
 import { AdminTimeContainer } from 'container';
-import { Error } from 'components';
+import { Loading, Error } from 'components';
 
 export default function AdminTimePage() {
 	const { loading, error } = useSelector(
@@ -13,7 +13,7 @@ export default function AdminTimePage() {
 
 	return (
 		<>
-			<styled.SkeletonList loading={loading} />
+			<Loading loading={loading} />
 			<Error error={error} />
 
 			<AdminTimeContainer />
