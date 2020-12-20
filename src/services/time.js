@@ -34,10 +34,11 @@ export const deleteCategory = async ({ id, accessToken }) => {
 	return response;
 };
 
-export const getTags = async ({ accessToken }) => {
+export const getTags = async ({ id, accessToken }) => {
 	const url = '/times/tag';
 	const headers = Request.getAuthorizationHeader(accessToken);
-	const response = await Request.onRequestGet({ url, headers });
+	const query = { categoryId: id };
+	const response = await Request.onRequestGet({ url, query, headers });
 
 	return response;
 };

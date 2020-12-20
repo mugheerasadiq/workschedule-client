@@ -6,9 +6,7 @@ import { Loading } from 'components';
 import { AuthRegisterContainer } from 'container';
 
 export default function AuthRegisterPage() {
-	const { loading } = useSelector(
-		(state) => state?.auth?.toJS().register.loading,
-	);
+	const { loading } = useSelector((state) => state?.auth?.toJS().register);
 
 	return (
 		<>
