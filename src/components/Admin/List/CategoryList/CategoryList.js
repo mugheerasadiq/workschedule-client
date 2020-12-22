@@ -36,7 +36,7 @@ export default function AdminCategoryList({ categories = [] }) {
 
 	return <>{categoryList}</>;
 }
-
+//issue
 function AdminCategoryItem({ name = '' }) {
 	return <styled.CategoryItem>{name}</styled.CategoryItem>;
 }
