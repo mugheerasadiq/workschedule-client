@@ -1,10 +1,17 @@
 import styled from 'styled-components';
 import 'antd.css';
-import { Table } from 'antd';
+import { Typography } from 'antd';
 
-export const CategoryWrapper = styled.div`
+export const TimeContainerWrapper = styled.div`
 	width: 70%;
-	min-height: 50%;
+	min-height: 50vh;
+	padding-left: 10px;
 `;
 
-export const CategoryTable = styled(Table)``;
+export const TimeContainerLogo = styled(Typography)`
+	font-size: 32px;
+	font-weight: bold;
+	font-family: 'S-CoreDream-3Light';
+
+	border-bottom: 1px solid #c8c8c8;
+`;
