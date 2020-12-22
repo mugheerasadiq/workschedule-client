@@ -12,10 +12,44 @@ import {
 
 import * as timeApi from 'services/time';
 
+const getTagListObjectFromCategories = (categories) => {
+	if (!categories) return {};
+
+	const tagObject = {};
+
+	categories.forEach((category) => {
+		if (category?.name in tagObject) {
+			const tags = category?.timeTags;
+
+			tags.forEach((tag) => {
+				tagObject[category?.name].push(tag);
+			});
+		} else {
+			tagObject[category?.name] = [];
+
+			const tags = category?.timeTags;
+			tags?.forEach((tag) => {
+				tagObject[category?.name].push(tag);
+			});
+		}
+	});
+
+	return tagObject;
+};
+
+const setTags = ({ dispatch, getState }) => {
+	const { timeCategories } = getState()?.time?.toJS().categories?.data;
+	const tagObject = getTagListObjectFromCategories(timeCategories);
+
+	console.log(`set Tags...`, tagObject);
+	dispatch({ type: TIME_TYPES.SET_TAGS, payload: tagObject });
+};
+
 export const onGetCategories = createPromiseThunk(
 	TIME_TYPES.GET_CATEGORIES,
 	timeApi.getCategories,
 	getAccessToken,
+	{ after: [setTags] },
 );
 
 export const onCreateCategory = createPromiseThunk(
@@ -33,12 +67,6 @@ export const onUpdateCategory = createPromiseThunk(
 export const onDeleteCategory = createPromiseThunk(
 	TIME_TYPES.DELETE_CATEGORY,
 	timeApi.deleteCategory,
-	getAccessToken,
-);
-
-export const onGetTags = createPromiseThunk(
-	TIME_TYPES.GET_TAGS,
-	timeApi.getTags,
 	getAccessToken,
 );
 

@@ -3,7 +3,7 @@ import { initialState } from '../state';
 
 export const timeState = Map({
 	categories: initialState.object,
-	tags: initialState.list,
+	tags: initialState.object,
 	created: initialState.object,
 	updated: initialState.object,
 	deleted: initialState.object,
