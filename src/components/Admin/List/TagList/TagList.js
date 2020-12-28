@@ -34,6 +34,9 @@ function AdminTagItem({ tag = [] }) {
 
 	return (
 		<styled.TagItem>
+			<styled.EditButtonWrapper>
+				<styled.DeleteButton />
+			</styled.EditButtonWrapper>
 			<styled.ItemGroup>{`${name}조`}</styled.ItemGroup>
 			<styled.ItemTime>{`${startTime} ~ ${endTime}`}</styled.ItemTime>
 		</styled.TagItem>
