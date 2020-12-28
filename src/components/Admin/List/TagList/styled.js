@@ -23,8 +23,6 @@ export const ItemGroup = styled.div`
 	width: 20%;
 
 	font-size: 24px;
-
-	text-align: center;
 `;
 
 export const ItemTime = styled.div`
