@@ -116,8 +116,6 @@ export default class Request {
 	static async tryRequestDelete({ url, params, headers }) {
 		url = this.getEndpoint() + url;
 
-		console.log(`url, params, headers`, url, params, headers);
-
 		const response = await axios({
 			method: 'DELETE',
 			url,

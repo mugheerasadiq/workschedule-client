@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as styled from './styled';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as timeActions from 'stores/time';
 
 import { parseTimestamp } from 'utils';
 
-export default function AdminTagList({ name = null, tagView = null }) {
+export default function AdminTagList({ name = null }) {
 	const data = useSelector((state) => state?.time?.toJS().tags?.data);
+	const dispatch = useDispatch();
 
-	if (!tagView?.view) return null;
-	if (name !== tagView?.name) return null;
+	const { onDeleteTag } = bindActionCreators(timeActions, dispatch);
 
 	let tags = [];
 
@@ -20,25 +23,23 @@ export default function AdminTagList({ name = null, tagView = null }) {
 	}
 
 	const tagList = tags.map((tag) => {
-		return <AdminTagItem key={tag.name} tag={tag} />;
+		return <AdminTagItem key={tag.name} tag={tag} onClick={onDeleteTag} />;
 	});
 
 	return <styled.TagList>{tagList}</styled.TagList>;
 }
 
-function AdminTagItem({ tag = [] }) {
-	let { name, start, end } = tag;
+function AdminTagItem({ tag = [], onClick }) {
+	let { id, name, start, end } = tag;
 
 	const startTime = parseTimestamp(start);
 	const endTime = parseTimestamp(end);
 
 	return (
 		<styled.TagItem>
-			<styled.EditButtonWrapper>
-				<styled.DeleteButton />
-			</styled.EditButtonWrapper>
 			<styled.ItemGroup>{`${name}조`}</styled.ItemGroup>
 			<styled.ItemTime>{`${startTime} ~ ${endTime}`}</styled.ItemTime>
+			<styled.DeleteButton onClick={() => onClick({ id })} />
 		</styled.TagItem>
 	);
 }

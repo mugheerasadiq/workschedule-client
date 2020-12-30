@@ -11,43 +11,6 @@ export const TagList = styled.div`
 	flex-wrap: wrap;
 `;
 
-export const TagItem = styled.div`
-	width: 100%;
-	height: 60px;
-
-	padding: 20px;
-
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
-
-	position: relative;
-
-	font-size: 20px;
-
-	border-bottom: 1px solid #ddd;
-`;
-
-export const ItemGroup = styled.div`
-	width: 20%;
-
-	font-size: 24px;
-
-	cursor: pointer;
-`;
-
-export const ItemTime = styled.div`
-	width: 50%;
-
-	font-size: 20px;
-`;
-
-export const EditButtonWrapper = styled.div`
-	position: absolute;
-	left: 0;
-`;
-
 export const DeleteButton = styled(CloseOutlined)`
 	width: 30px;
 	height: 30px;
@@ -58,6 +21,43 @@ export const DeleteButton = styled(CloseOutlined)`
 
 	color: rgba(250, 50, 50, 0.8);
 
+	visibility: hidden;
+	position: absolute;
+	right: 0;
+
 	z-index: 1;
 	cursor: pointer;
+`;
+
+export const TagItem = styled.div`
+	width: 100%;
+	height: 60px;
+
+	padding: 20px;
+
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+
+	position: relative;
+
+	font-size: 20px;
+
+	border-bottom: 1px solid #ddd;
+
+	&:hover ${DeleteButton} {
+		visibility: visible;
+	}
+`;
+
+export const ItemGroup = styled.div`
+	width: 20%;
+
+	font-size: 24px;
+`;
+
+export const ItemTime = styled.div`
+	width: 50%;
+
+	font-size: 20px;
 `;

@@ -9,16 +9,15 @@ export const getUsers = async ({ accessToken }) => {
 };
 
 export const getUser = async ({ id, accessToken }) => {
-	const url = '/users';
-	const params = { id };
+	const url = `/users/${id}`;
 	const headers = Request.getAuthorizationHeader(accessToken);
-	const response = await Request.onRequestGet({ url, params, headers });
+	const response = await Request.onRequestGet({ url, headers });
 
 	return response;
 };
 
-export const updateUser = async ({ accessToken, params }) => {
-	const url = '/users';
+export const updateUser = async ({ id, accessToken, params }) => {
+	const url = `/users/${id}`;
 	const headers = Request.getAuthorizationHeader(accessToken);
 	const response = await Request.onRequestPatch({ url, params, headers });
 
@@ -26,10 +25,9 @@ export const updateUser = async ({ accessToken, params }) => {
 };
 
 export const deleteUser = async ({ id, accessToken }) => {
-	const url = '/users';
-	const params = { id };
+	const url = `/users/${id}`;
 	const headers = Request.getAuthorizationHeader(accessToken);
-	const response = await Request.onRequestDelete({ url, params, headers });
+	const response = await Request.onRequestDelete({ url, headers });
 
 	return response;
 };
