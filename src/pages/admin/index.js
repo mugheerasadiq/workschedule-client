@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 // pages
+import { AdminUserPage } from './user';
 import { AdminGetWorksPage } from './work';
 import { AdminTimePage } from './time';
 
@@ -18,6 +19,7 @@ export default function AdminPage() {
 	return (
 		<AdminLayout>
 			<Switch>
+				<Route path="/admin/user" component={AdminUserPage} />
 				<Route path="/admin/time" component={AdminTimePage} />
 				<Route path="/admin" component={AdminGetWorksPage} />
 			</Switch>
