@@ -45,9 +45,6 @@ export const deleteCategory = async ({ id, accessToken }) => {
 export const createTag = async ({ params, accessToken }) => {
 	const url = '/times/tags';
 	const headers = Request.getAuthorizationHeader(accessToken);
-
-	console.log(url, params, headers);
-
 	const response = await Request.onRequestPost({ url, params, headers });
 
 	return response;
