@@ -17,6 +17,12 @@ export const onReset = ({ dispatch }) => {
 	dispatch(WORK_TYPES.RESET);
 };
 
+export const onGetWork = createPromiseThunk(
+	WORK_TYPES.GET_WORK,
+	workApi.getWork,
+	getAccessToken,
+);
+
 export const onGetWorks = createPromiseThunk(
 	WORK_TYPES.GET_WORKS,
 	workApi.getWorks,
@@ -47,6 +53,18 @@ export default handleActions(
 	{
 		[WORK_TYPES.RESET]: (state, _) => {
 			return workState;
+		},
+		[WORK_TYPES.GET_WORK]: (state, _) => {
+			const loadingState = createPromiseState.loading();
+			return createImmutableState(state, 'work', loadingState);
+		},
+		[WORK_TYPES.GET_WORK_DONE]: (state, action) => {
+			const doneState = createPromiseState.done(action?.payload);
+			return createImmutableState(state, 'work', doneState);
+		},
+		[WORK_TYPES.GET_WORK_ERROR]: (state, action) => {
+			const errorState = createPromiseState.error(action?.payload);
+			return createImmutableState(state, 'work', errorState);
 		},
 		[WORK_TYPES.GET_WORKS]: (state, _) => {
 			const loadingState = createPromiseState.loading();

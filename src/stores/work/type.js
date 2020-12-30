@@ -3,6 +3,10 @@ import { TYPE_DONE, TYPE_ERROR } from '../type';
 export const WORK_TYPES = {
 	RESET: 'work/RESET',
 
+	GET_WORK: 'work/GET_WORK',
+	GET_WORK_DONE: TYPE_DONE('work/GET_WORK'),
+	GET_WORK_ERROR: TYPE_ERROR('work/GET_WORK'),
+
 	GET_WORKS: 'work/GET_WORKS',
 	GET_WORKS_DONE: TYPE_DONE('work/GET_WORKS'),
 	GET_WORKS_ERROR: TYPE_ERROR('work/GET_WORKS'),

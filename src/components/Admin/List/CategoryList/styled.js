@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import 'antd.css';
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 
 export const CategoryListWrapper = styled.div`
@@ -10,10 +10,32 @@ export const CategoryListWrapper = styled.div`
 	flex-wrap: wrap;
 `;
 
+export const DeleteButton = styled(CloseOutlined)`
+	width: 30px;
+	height: 30px;
+	margin: 20px 5px;
+	padding-top: 10px;
+
+	font-size: 20px;
+
+	color: rgba(250, 50, 50, 0.8);
+
+	visibility: hidden;
+	position: absolute;
+	right: 0;
+
+	z-index: 1;
+
+	cursor: pointer;
+`;
+
 export const CategoryWrapper = styled.div`
 	width: 100%;
 
 	display: flex;
+	&:hover ${DeleteButton} {
+		visibility: visible;
+	}
 `;
 
 export const CategoryItem = styled.div`
@@ -24,8 +46,17 @@ export const CategoryItem = styled.div`
 	font-size: 24px;
 
 	border-bottom: 1px solid #ddd;
+`;
 
-	cursor: pointer;
+export const CategoryEditItem = styled(Input)`
+	width: 100%;
+	height: 60px;
+
+	font-size: 24px;
+
+	background-color: transparent;
+
+	outline: none;
 `;
 
 export const EditCategory = styled.div``;
@@ -58,16 +89,4 @@ export const CreateButtonWrapper = styled.div`
 
 	right: 0;
 	bottom: -70px;
-`;
-
-export const DeleteButton = styled(CloseOutlined)`
-	width: 30px;
-	height: 30px;
-	margin: 20px 5px;
-
-	font-size: 30px;
-
-	color: rgba(250, 50, 50, 0.8);
-
-	cursor: pointer;
 `;
