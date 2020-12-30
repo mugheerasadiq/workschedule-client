@@ -19,7 +19,7 @@ export default function TagModal({ modal, setModal }) {
 	);
 
 	const [inputs, setInputs] = useState({
-		id: '',
+		timeCategory: '',
 		name: '',
 		start: '',
 		end: '',
@@ -32,15 +32,10 @@ export default function TagModal({ modal, setModal }) {
 				...inputs,
 				[name]: value,
 			});
-			console.log(inputs);
+			console.log(`onChange`, inputs);
 		},
 		[inputs, setInputs],
 	);
-
-	const onOk = useCallback(() => {
-		setInputs({ ...inputs });
-		onCreateTag({ params: inputs });
-	}, [inputs]);
 
 	const onCancel = useCallback(() => {
 		setModal(false);
@@ -49,7 +44,7 @@ export default function TagModal({ modal, setModal }) {
 	useEffect(() => {
 		if (!done) return null;
 		setModal(false);
-		setInputs({ id: '', name: '', start: '', end: '' });
+		setInputs({ timeCategory: '', name: '', start: '', end: '' });
 		onGetCategories();
 	}, [done]);
 
@@ -58,7 +53,7 @@ export default function TagModal({ modal, setModal }) {
 			title="시간대 생성"
 			visible={modal}
 			onCancel={onCancel}
-			onOk={onOk}
+			onOk={() => onCreateTag({ params: inputs })}
 			confirmLoading={loading}
 		>
 			<SelectCategory inputs={inputs} setInputs={setInputs} />

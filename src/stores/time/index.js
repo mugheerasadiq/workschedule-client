@@ -161,7 +161,7 @@ export default handleActions(
 		},
 		[TIME_TYPES.CREATE_TAG_DONE]: (state, action) => {
 			const doneState = createPromiseState.done(action?.payload);
-			return createImmutableState(state, 'craeted', doneState);
+			return createImmutableState(state, 'created', doneState);
 		},
 		[TIME_TYPES.CREATE_TAG_ERROR]: (state, action) => {
 			const errorState = createPromiseState.error(action?.payload);
