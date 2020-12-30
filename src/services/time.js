@@ -8,14 +8,12 @@ export const getCategories = async ({ accessToken }) => {
 	return response;
 };
 
-export const createCategory = async ({ id, name, accessToken }) => {
+export const createCategory = async ({ name, accessToken }) => {
 	const url = '/times/categories';
 	const params = { name };
-	const query = { categoryId: id };
 	const headers = Request.getAuthorizationHeader(accessToken);
 	const response = await Request.onRequestPost({
 		url,
-		query,
 		params,
 		headers,
 	});
@@ -41,8 +39,8 @@ export const updateCategory = async ({ id, name, accessToken }) => {
 export const deleteCategory = async ({ id, accessToken }) => {
 	const url = '/times/categories';
 	const headers = Request.getAuthorizationHeader(accessToken);
-	const query = { categoryId: id };
-	const response = await Request.onRequestDelete({ url, query, headers });
+	const params = { id };
+	const response = await Request.onRequestDelete({ url, params, headers });
 
 	return response;
 };

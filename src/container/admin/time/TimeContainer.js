@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as styled from './styled';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,12 +6,17 @@ import { bindActionCreators } from 'redux';
 
 import * as timeActions from 'stores/time';
 
-import { Loading, Error, AdminCategoryList } from 'components';
+import { Loading, Error, AdminCategoryList, Modal } from 'components';
 
 export default function AdminTimeContaier() {
 	const dispatch = useDispatch();
 
-	const { onGetCategories } = bindActionCreators(timeActions, dispatch);
+	const {
+		onGetCategories,
+		onCreateTag,
+		onUpdateTag,
+		onDeleteTag,
+	} = bindActionCreators(timeActions, dispatch);
 
 	const categories = useSelector((state) => state?.time?.toJS().categories);
 
@@ -30,7 +35,7 @@ export default function AdminTimeContaier() {
 
 			<styled.TimeContainerWrapper>
 				<styled.TimeContainerLogo>시간대</styled.TimeContainerLogo>
-				<AdminCategoryList categories={timeCategories || []} />
+				<AdminCategoryList categories={timeCategories} />
 			</styled.TimeContainerWrapper>
 		</>
 	);

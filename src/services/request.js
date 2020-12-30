@@ -11,7 +11,7 @@ export default class Request {
 		}
 		if (error.request) {
 			// 요청을 했지만 응답을 받지 못함
-			console.log(error.request);
+			console.log(`request`, error.request);
 		} else {
 			// 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
 			console.log('Error', error.message);
@@ -116,15 +116,19 @@ export default class Request {
 	static async tryRequestDelete({ url, params, headers }) {
 		url = this.getEndpoint() + url;
 
+		console.log(`url, params, headers`, url, params, headers);
+
 		const response = await axios({
 			method: 'DELETE',
 			url,
 			data: params,
 			headers,
 		});
+
 		const status = response?.status;
 		const data = response?.data;
 
+		console.log(`delete axios responses`, status, data);
 		return { status, data };
 	}
 }
