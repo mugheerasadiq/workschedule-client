@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 
 import * as timeActions from 'stores/time';
 
-import { Loading, Error, AdminCategoryList } from 'components';
+import { Loading, Error, AdminCategoryList, Modal } from 'components';
 
 export default function AdminTimeContaier() {
 	const dispatch = useDispatch();

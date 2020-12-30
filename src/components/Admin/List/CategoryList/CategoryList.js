@@ -24,7 +24,7 @@ export default function AdminCategoryList({ categories = [] }) {
 
 	const [createView, setCreateView] = useState({
 		modal: false,
-		name: '',
+		target: '',
 	});
 	const [editInput, setEditInput] = useState('');
 
@@ -35,11 +35,18 @@ export default function AdminCategoryList({ categories = [] }) {
 		});
 	}, []);
 
-	const onClickEdit = useCallback((name, id) => {
-		setEditInput(name);
+	const onClickCreateCategory = useCallback(() => {
+		setCreateView({
+			modal: true,
+			target: '카테고리 생성',
+		});
 	}, []);
 
-	const onClickDelete = useCallback((id) => {}, []);
+	const onClickEdit = useCallback((name, id) => {}, []);
+
+	const onClickDelete = useCallback((id) => {
+		onDeleteCategory({ id });
+	}, []);
 
 	const categoryList = categories?.map((category, index) => {
 		const name = category?.name;
@@ -52,7 +59,7 @@ export default function AdminCategoryList({ categories = [] }) {
 						+
 					</styled.TagViewButton>
 					<AdminCategoryItem key={name} name={name} />
-					<styled.DeleteButton onClick={() => onDeleteCategory(id)} />
+					<styled.DeleteButton onClick={() => onClickDelete(id)} />
 				</styled.CategoryWrapper>
 				<AdminTagList key={name} tagView={tagView} name={name} />
 			</styled.CategoryListWrapper>
@@ -60,13 +67,18 @@ export default function AdminCategoryList({ categories = [] }) {
 	});
 
 	return (
-		<styled.ListAndButtonWrapper>
-			{categoryList}
-			<styled.CreateButtonWrapper>
-				<styled.CreateButton>시간대 생성</styled.CreateButton>
-				<styled.CreateButton>조 생성</styled.CreateButton>
-			</styled.CreateButtonWrapper>
-		</styled.ListAndButtonWrapper>
+		<>
+			<Modal createView={createView} setCreateView={setCreateView} />
+			<styled.ListAndButtonWrapper>
+				{categoryList}
+				<styled.CreateButtonWrapper>
+					<styled.CreateButton onClick={onClickCreateCategory}>
+						시간대 생성
+					</styled.CreateButton>
+					<styled.CreateButton>조 생성</styled.CreateButton>
+				</styled.CreateButtonWrapper>
+			</styled.ListAndButtonWrapper>
+		</>
 	);
 }
 

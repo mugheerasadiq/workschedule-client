@@ -2,24 +2,6 @@ import styled from 'styled-components';
 import 'antd.css';
 import { Modal } from 'antd';
 
-export const ModalPage = styled.div`
-	width: 100%;
-	min-height: 100vh;
-
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
-
-	position: fixed;
-	top: 0;
-	left: 0;
-
-	background-color: rgba(220, 220, 220, 0.4);
-
-	z-index: 3;
-`;
-
 export const ModalWrapper = styled(Modal)`
 	width: 70%;
 	min-height: 50%;
