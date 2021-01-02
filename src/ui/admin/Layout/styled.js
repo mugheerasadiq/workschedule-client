@@ -55,7 +55,7 @@ export const PcSubMenu = styled(SubMenu)``;
 export const PcItem = styled(Item)``;
 
 export const PcContent = styled(Content)`
+	min-height: 100vh;
 	padding: 24px;
 	margin: 0;
-	min-height: 280px;
 `;

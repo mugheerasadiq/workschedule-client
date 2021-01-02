@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 
 import * as timeActions from 'stores/time';
 
-import { SelectCategory } from 'components';
+import { SelectCategory, TagTime } from 'components';
 
 export default function TagModal({ modal, setModal }) {
 	const created = useSelector((state) => state?.time?.toJS().created);
@@ -63,18 +63,7 @@ export default function TagModal({ modal, setModal }) {
 				onChange={onChange}
 				placeholder="조이름을 입력하세요"
 			/>
-			<styled.ModalInput
-				name="start"
-				value={inputs.start}
-				onChange={onChange}
-				placeholder="시작시간을 입력하세요"
-			/>
-			<styled.ModalInput
-				name="end"
-				value={inputs.end}
-				onChange={onChange}
-				placeholder="끝나는 시간을 입력하세요"
-			/>
+			<TagTime inputs={inputs} setInputs={setInputs} />
 		</styled.ModalWrapper>
 	);
 }

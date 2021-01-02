@@ -3,8 +3,8 @@ import 'antd.css';
 import { Typography } from 'antd';
 
 export const TimeContainerWrapper = styled.div`
-	width: 70%;
-	min-height: 50vh;
+	width: 90%;
+	min-height: 100vh;
 	padding-left: 10px;
 `;
 

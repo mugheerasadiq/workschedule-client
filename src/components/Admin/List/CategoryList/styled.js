@@ -46,6 +46,10 @@ export const CategoryItem = styled.div`
 	font-size: 24px;
 
 	border-bottom: 1px solid #ddd;
+
+	@media (max-width: 375px) {
+		font-size: 20px !important;
+	}
 `;
 
 export const CategoryEditItem = styled(Input)`
