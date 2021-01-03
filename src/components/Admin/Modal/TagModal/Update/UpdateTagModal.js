@@ -44,6 +44,7 @@ export default function UpdateTagModal({ modal, setModal }) {
 		setModal({
 			modal: false,
 			timeCategory: null,
+			id: null,
 			name: null,
 			start: null,
 			end: null,
@@ -51,12 +52,13 @@ export default function UpdateTagModal({ modal, setModal }) {
 		onGetCategories();
 	}, [done]);
 
+	const params = { ...modal };
 	return (
 		<styled.ModalWrapper
 			title="조 변경"
 			visible={modal?.modal}
 			onCancel={onCancel}
-			onOk={() => onUpdateTag({ params: modal })}
+			onOk={() => onUpdateTag(params)}
 			confirmLoading={loading}
 		>
 			<SelectCategory inputs={modal} setInputs={setModal} />

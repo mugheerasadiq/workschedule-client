@@ -50,9 +50,17 @@ export const createTag = async ({ params, accessToken }) => {
 	return response;
 };
 
-export const updateTag = async ({ id, name, start, end, accessToken }) => {
+export const updateTag = async ({
+	id,
+	timeCategory,
+	name,
+	start,
+	end,
+	accessToken,
+}) => {
 	const url = `/times/tags/${id}`;
-	const params = { name, start, end };
+	console.log(id, timeCategory, name, start, end, accessToken);
+	const params = { timeCategory, name, start, end };
 	const headers = Request.getAuthorizationHeader(accessToken);
 	const response = await Request.onRequestPatch({ url, params, headers });
 
