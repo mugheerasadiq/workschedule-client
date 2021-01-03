@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import 'antd.css';
 import { Button, Input } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined, EditOutlined } from '@ant-design/icons';
 
 export const CategoryListWrapper = styled.div`
 	width: 100%;
@@ -29,11 +29,33 @@ export const DeleteButton = styled(CloseOutlined)`
 	cursor: pointer;
 `;
 
+export const EditButton = styled(EditOutlined)`
+	width: 30px;
+	height: 30px;
+	margin: 20px 5px;
+	padding-top: 10px;
+
+	font-size: 20px;
+
+	color: rgba(150, 100, 50, 0.8);
+
+	visibility: hidden;
+	position: absolute;
+	right: 40px;
+
+	z-index: 1;
+
+	cursor: pointer;
+`;
+
 export const CategoryWrapper = styled.div`
 	width: 100%;
 
 	display: flex;
 	&:hover ${DeleteButton} {
+		visibility: visible;
+	}
+	&:hover ${EditButton} {
 		visibility: visible;
 	}
 `;

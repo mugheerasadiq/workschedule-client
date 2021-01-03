@@ -11,10 +11,6 @@ export default function SelectCategory({ inputs, setInputs }) {
 		(state) => state?.time?.toJS().categories?.data,
 	);
 
-	const onFocus = () => {
-		console.log('focus');
-	};
-
 	const onChange = useCallback(
 		(key, value) => {
 			setInputs({
@@ -26,12 +22,20 @@ export default function SelectCategory({ inputs, setInputs }) {
 		[inputs, setInputs],
 	);
 
+	const defaultValue = useCallback(() => {
+		if (!inputs?.timeCategory) return null;
+
+		console.log(inputs?.timeCategory);
+
+		return inputs?.timeCategory;
+	}, [inputs]);
+
 	return (
 		<styled.SelectCategories
 			showSearch="true"
 			placeholder="시간대를 검색하세요"
 			onChange={onChange}
-			onFocus={onFocus}
+			defaultValue={defaultValue}
 		>
 			{timeCategories?.map((timeCategory) => (
 				<Option key={timeCategory.id} value={timeCategory.name}>

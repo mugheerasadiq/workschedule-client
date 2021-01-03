@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import 'antd.css';
-import { CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined, EditOutlined } from '@ant-design/icons';
 
 export const TagList = styled.div`
 	width: 100%;
@@ -28,6 +28,25 @@ export const DeleteButton = styled(CloseOutlined)`
 	cursor: pointer;
 `;
 
+export const EditButton = styled(EditOutlined)`
+	width: 30px;
+	height: 30px;
+	margin: 20px 5px;
+	padding-top: 10px;
+
+	font-size: 20px;
+
+	color: rgba(150, 100, 50, 0.8);
+
+	visibility: hidden;
+	position: absolute;
+	right: 40px;
+
+	z-index: 1;
+
+	cursor: pointer;
+`;
+
 export const TagItem = styled.div`
 	width: 100%;
 	height: 60px;
@@ -47,8 +66,8 @@ export const TagItem = styled.div`
 	&:hover ${DeleteButton} {
 		visibility: visible;
 	}
-	@media (max-width: 375px) {
-		font-size: 14px !important;
+	&:hover ${EditButton} {
+		visibility: visible;
 	}
 `;
 
@@ -56,17 +75,10 @@ export const ItemGroup = styled.div`
 	width: 20%;
 
 	font-size: 24px;
-	@media (max-width: 375px) {
-		font-size: 15px !important;
-		font-weight: bold !important;
-	}
 `;
 
 export const ItemTime = styled.div`
 	width: 80%;
 
 	font-size: 20px;
-	@media (max-width: 375px) {
-		font-size: 14px !important;
-	}
 `;

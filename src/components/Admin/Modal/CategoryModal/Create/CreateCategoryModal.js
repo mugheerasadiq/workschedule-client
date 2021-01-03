@@ -6,36 +6,22 @@ import { bindActionCreators } from 'redux';
 
 import * as timeActions from 'stores/time';
 
-import { SelectCategory, TagTime } from 'components';
-
-export default function TagModal({ modal, setModal }) {
+export default function CreateCategoryModal({ modal, setModal }) {
 	const created = useSelector((state) => state?.time?.toJS().created);
 	const { loading, done } = created;
 
 	const dispatch = useDispatch();
-	const { onGetCategories, onCreateTag } = bindActionCreators(
+	const { onGetCategories, onCreateCategory } = bindActionCreators(
 		timeActions,
 		dispatch,
 	);
 
-	const [inputs, setInputs] = useState({
-		timeCategory: '',
-		name: '',
-		start: '',
-		end: '',
-	});
+	const [name, setName] = useState('');
 
-	const onChange = useCallback(
-		(e) => {
-			const { name, value } = e.target;
-			setInputs({
-				...inputs,
-				[name]: value,
-			});
-			console.log(`onChange`, inputs);
-		},
-		[inputs, setInputs],
-	);
+	const onChange = (e) => {
+		const { value } = e.target;
+		setName(value);
+	};
 
 	const onCancel = useCallback(() => {
 		setModal(false);
@@ -44,7 +30,7 @@ export default function TagModal({ modal, setModal }) {
 	useEffect(() => {
 		if (!done) return null;
 		setModal(false);
-		setInputs({ timeCategory: '', name: '', start: '', end: '' });
+		setName('');
 		onGetCategories();
 	}, [done]);
 
@@ -53,17 +39,14 @@ export default function TagModal({ modal, setModal }) {
 			title="시간대 생성"
 			visible={modal}
 			onCancel={onCancel}
-			onOk={() => onCreateTag({ params: inputs })}
+			onOk={() => onCreateCategory({ name })}
 			confirmLoading={loading}
 		>
-			<SelectCategory inputs={inputs} setInputs={setInputs} />
 			<styled.ModalInput
-				name="name"
-				value={inputs.name}
+				value={name}
 				onChange={onChange}
-				placeholder="조이름을 입력하세요"
+				placeholder="시간대를 입력하세요"
 			/>
-			<TagTime inputs={inputs} setInputs={setInputs} />
 		</styled.ModalWrapper>
 	);
 }
