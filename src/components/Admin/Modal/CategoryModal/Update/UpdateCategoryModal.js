@@ -6,21 +6,33 @@ import { bindActionCreators } from 'redux';
 
 import * as timeActions from 'stores/time';
 
-export default function CategoryModal({ modal, setModal }) {
-	const created = useSelector((state) => state?.time?.toJS().created);
-	const { loading, done } = created;
+export default function UpdateCategoryModal({
+	id = '',
+	categoryName = '',
+	modal,
+	setModal,
+}) {
+	const updated = useSelector((state) => state?.time?.toJS().updated);
+	const { loading, done } = updated;
 
 	const dispatch = useDispatch();
-	const { onGetCategories, onCreateCategory } = bindActionCreators(
+	const { onGetCategories, onUpdateCategory } = bindActionCreators(
 		timeActions,
 		dispatch,
 	);
 
 	const [name, setName] = useState('');
 
+	useEffect(() => {
+		if (!id) return null;
+		setName(categoryName);
+	}, [id]);
+
 	const onChange = (e) => {
 		const { value } = e.target;
 		setName(value);
+
+		console.log(name);
 	};
 
 	const onCancel = useCallback(() => {
@@ -36,10 +48,10 @@ export default function CategoryModal({ modal, setModal }) {
 
 	return (
 		<styled.ModalWrapper
-			title="시간대 생성"
+			title="시간대 변경"
 			visible={modal}
 			onCancel={onCancel}
-			onOk={() => onCreateCategory({ name })}
+			onOk={() => onUpdateCategory({ id, name })}
 			confirmLoading={loading}
 		>
 			<styled.ModalInput

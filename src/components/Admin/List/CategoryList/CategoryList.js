@@ -6,23 +6,28 @@ import { bindActionCreators } from 'redux';
 
 import * as timeActions from 'stores/time';
 
-import { AdminTagList, CategoryModal, TagModal } from 'components';
+import {
+	AdminTagList,
+	CreateCategoryModal,
+	UpdateCategoryModal,
+	CreateTagModal,
+} from 'components';
 
 export default function AdminCategoryList({ categories = [] }) {
 	const done = useSelector((state) => state?.time?.toJS().deleted?.done);
 	const dispatch = useDispatch();
 
-	const {
-		onGetCategories,
-		onUpdateCategory,
-		onDeleteCategory,
-	} = bindActionCreators(timeActions, dispatch);
+	const { onGetCategories, onDeleteCategory } = bindActionCreators(
+		timeActions,
+		dispatch,
+	);
 
-	const [categoryModal, setCategoryModal] = useState(false);
-	const [tagModal, setTagModal] = useState(false);
-
-	const onModalClick = useCallback((setModal) => {
-		setModal(true);
+	const [createCategoryModal, setCreateCategoryModal] = useState(false);
+	const [createTagModal, setCreateTagModal] = useState(false);
+	const [updateCategoryModal, setUpdateCategoryModal] = useState({
+		modal: false,
+		id: '',
+		name: '',
 	});
 
 	useEffect(() => {
@@ -38,6 +43,15 @@ export default function AdminCategoryList({ categories = [] }) {
 			<styled.CategoryListWrapper key={index}>
 				<styled.CategoryWrapper>
 					<AdminCategoryItem key={name} name={name} />
+					<styled.EditButton
+						onClick={() =>
+							setUpdateCategoryModal({
+								modal: true,
+								id,
+								name,
+							})
+						}
+					/>
 					<styled.DeleteButton
 						onClick={() => onDeleteCategory({ id })}
 					/>
@@ -49,19 +63,31 @@ export default function AdminCategoryList({ categories = [] }) {
 
 	return (
 		<>
-			<CategoryModal modal={categoryModal} setModal={setCategoryModal} />
-			<TagModal modal={tagModal} setModal={setTagModal} />
+			<CreateCategoryModal
+				modal={createCategoryModal}
+				setModal={setCreateCategoryModal}
+			/>
+			<UpdateCategoryModal
+				id={updateCategoryModal.id}
+				categoryName={updateCategoryModal.name}
+				modal={updateCategoryModal.modal}
+				setModal={setUpdateCategoryModal}
+			/>
+			<CreateTagModal
+				modal={createTagModal}
+				setModal={setCreateTagModal}
+			/>
 
 			<styled.ListAndButtonWrapper>
 				{categoryList}
 				<styled.CreateButtonWrapper>
 					<styled.CreateButton
-						onClick={() => onModalClick(setCategoryModal)}
+						onClick={() => setCreateCategoryModal(true)}
 					>
 						시간대 생성
 					</styled.CreateButton>
 					<styled.CreateButton
-						onClick={() => onModalClick(setTagModal)}
+						onClick={() => setCreateTagModal(true)}
 					>
 						조 생성
 					</styled.CreateButton>

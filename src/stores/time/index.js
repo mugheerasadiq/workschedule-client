@@ -22,14 +22,20 @@ const getTagListObjectFromCategories = (categories) => {
 			const tags = category?.timeTags;
 
 			tags.forEach((tag) => {
-				tagObject[category?.name].push(tag);
+				tagObject[category?.name].push({
+					...tag,
+					timeCategory: category?.name,
+				});
 			});
 		} else {
 			tagObject[category?.name] = [];
 
 			const tags = category?.timeTags;
 			tags?.forEach((tag) => {
-				tagObject[category?.name].push(tag);
+				tagObject[category?.name].push({
+					...tag,
+					timeCategory: category?.name,
+				});
 			});
 		}
 	});

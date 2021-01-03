@@ -13,3 +13,8 @@ export const parseTimestamp = (timestamp) => {
 	const { hours, minutes } = getTimestamp(timestamp);
 	return `${hours}시 ${minutes}분`;
 };
+
+export const parseAndReturnTimeStamp = (timestamp) => {
+	const { hours, minutes } = getTimestamp(timestamp);
+	return { hours, minutes };
+};

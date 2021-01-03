@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as styled from './styled';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 
 import * as timeActions from 'stores/time';
 
+import { UpdateTagModal } from 'components';
 import { parseTimestamp } from 'utils';
 
 export default function AdminTagList({ name = null }) {
@@ -30,16 +31,43 @@ export default function AdminTagList({ name = null }) {
 }
 
 function AdminTagItem({ tag = [], onClick }) {
-	let { id, name, start, end } = tag;
+	let { id, timeCategory, name, start, end } = tag;
+
+	const [updateTagModal, setUpdateTagModal] = useState({
+		modal: false,
+		timeCategory: null,
+		id: null,
+		name: null,
+		start: null,
+		end: null,
+	});
 
 	const startTime = parseTimestamp(start);
 	const endTime = parseTimestamp(end);
 
 	return (
-		<styled.TagItem>
-			<styled.ItemGroup>{`${name}조`}</styled.ItemGroup>
-			<styled.ItemTime>{`${startTime} ~ ${endTime}`}</styled.ItemTime>
-			<styled.DeleteButton onClick={() => onClick({ id })} />
-		</styled.TagItem>
+		<>
+			<UpdateTagModal
+				modal={updateTagModal}
+				setModal={setUpdateTagModal}
+			/>
+			<styled.TagItem>
+				<styled.ItemGroup>{`${name}조`}</styled.ItemGroup>
+				<styled.ItemTime>{`${startTime} ~ ${endTime}`}</styled.ItemTime>
+				<styled.EditButton
+					onClick={() =>
+						setUpdateTagModal({
+							modal: true,
+							timeCategory,
+							id,
+							name,
+							start,
+							end,
+						})
+					}
+				/>
+				<styled.DeleteButton onClick={() => onClick({ id })} />
+			</styled.TagItem>
+		</>
 	);
 }

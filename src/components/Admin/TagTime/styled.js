@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import 'antd.css';
 import { Input, Typography } from 'antd';
 
-export const timeWrapper = styled.div`
+export const TimeWrapper = styled.div`
 	width: 100%;
 	margin-top: 20px;
 
@@ -11,11 +11,11 @@ export const timeWrapper = styled.div`
 	align-items: center;
 `;
 
-export const timeFont = styled(Typography)`
+export const TimeFont = styled(Typography)`
 	width: 25%;
 `;
 
-export const timeInput = styled(Input)`
+export const TimeInput = styled(Input)`
 	width: 30%;
 	margin: 0 2%;
 `;
