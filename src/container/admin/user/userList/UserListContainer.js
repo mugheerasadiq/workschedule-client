@@ -8,12 +8,6 @@ import * as userActions from 'stores/user';
 
 import { Loading, Error, UserList } from 'components';
 
-function userData(data = []) {
-	let userData = [];
-
-	return userData;
-}
-
 export default function AdminUserListContainer() {
 	const dispatch = useDispatch();
 
@@ -21,6 +15,10 @@ export default function AdminUserListContainer() {
 
 	const users = useSelector((state) => state?.user?.toJS()?.users);
 	const { loading, data, error } = users;
+
+	const userList = data
+		?.filter((user) => user.status === 'confirm')
+		?.map((user, index) => ({ ...user, key: index }));
 
 	useEffect(() => {
 		onGetUsers();
@@ -33,7 +31,7 @@ export default function AdminUserListContainer() {
 
 			<styled.UserListWrapper>
 				<styled.UserListLogo>사원 리스트</styled.UserListLogo>
-				<UserList users={data} />
+				<UserList userList={userList} />
 			</styled.UserListWrapper>
 		</>
 	);

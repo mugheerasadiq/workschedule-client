@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as styled from './styled';
 
 const columns = [
@@ -19,8 +19,6 @@ const columns = [
 	},
 ];
 
-export default function UserList({ users = [] }) {
-	const userList = users?.map((user, index) => ({ ...user, key: index }));
-
+export default function UserList({ userList = [] }) {
 	return <styled.UserListTable columns={columns} dataSource={userList} />;
 }

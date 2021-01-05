@@ -16,9 +16,13 @@ export const getUser = async ({ id, accessToken }) => {
 	return response;
 };
 
-export const updateUser = async ({ id, accessToken, params }) => {
+export const updateUser = async ({ id, accessToken, status }) => {
 	const url = `/users/${id}`;
 	const headers = Request.getAuthorizationHeader(accessToken);
+	const params = { status };
+
+	console.log(id, status);
+
 	const response = await Request.onRequestPatch({ url, params, headers });
 
 	return response;

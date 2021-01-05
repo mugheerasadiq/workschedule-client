@@ -8,7 +8,7 @@ export const userState = Map({
 		accessToken: null,
 		loginTime: null,
 	}),
-	users: initialState.object,
+	users: initialState.list,
 	user: initialState.object,
 	updated: initialState.object,
 	deleted: initialState.object,
