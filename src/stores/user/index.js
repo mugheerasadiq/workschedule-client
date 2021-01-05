@@ -69,7 +69,7 @@ export default handleActions(
 			return createImmutableState(state, 'users', loadingState);
 		},
 		[USER_TYPES.GET_USERS_DONE]: (state, action) => {
-			const doneState = createPromiseState.done(action?.payload);
+			const doneState = createPromiseState.done(action?.payload?.users);
 			return createImmutableState(state, 'users', doneState);
 		},
 		[USER_TYPES.GET_USERS_ERROR]: (state, action) => {
