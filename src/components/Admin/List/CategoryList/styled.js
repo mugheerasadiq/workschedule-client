@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import 'antd.css';
 import { Button, Input } from 'antd';
 import { CloseOutlined, EditOutlined } from '@ant-design/icons';
 

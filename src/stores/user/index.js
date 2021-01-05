@@ -81,7 +81,7 @@ export default handleActions(
 			return createImmutableState(state, 'updated', loadingState);
 		},
 		[USER_TYPES.UPDATE_USER_DONE]: (state, action) => {
-			const doneState = createPromiseState.done(action?.payload);
+			const doneState = createPromiseState.done();
 			return createImmutableState(state, 'updated', doneState);
 		},
 		[USER_TYPES.UPDATE_USER_ERROR]: (state, action) => {

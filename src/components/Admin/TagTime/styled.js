@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import 'antd.css';
 import { Input, Typography } from 'antd';
 
 export const TimeWrapper = styled.div`

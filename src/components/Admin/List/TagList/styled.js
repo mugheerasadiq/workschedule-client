@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import 'antd.css';
 import { CloseOutlined, EditOutlined } from '@ant-design/icons';
 
 export const TagList = styled.div`
