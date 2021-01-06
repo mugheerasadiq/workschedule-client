@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Layout, Popconfirm } from 'antd';
-import { FormOutlined, UserDeleteOutlined } from '@ant-design/icons';
+import { Layout, Popconfirm, Typography } from 'antd';
+import { UserDeleteOutlined } from '@ant-design/icons';
 import 'antd.css';
 
 import { Link } from 'react-router-dom';
@@ -15,23 +15,9 @@ export const PcHeader = styled(Header)`
 	justify-content: space-between;
 	align-items: center;
 
+	position: relative;
+
 	padding: 0 30px !important;
-`;
-
-export const IconButton = styled(Popconfirm)``;
-
-export const ConfirmAlert = styled.a``;
-
-export const AdminIcon = styled(FormOutlined)`
-	font-size: 20px;
-	color: white;
-
-	margin-right: 20px;
-`;
-
-export const LogoutIcon = styled(UserDeleteOutlined)`
-	font-size: 20px;
-	color: white;
 `;
 
 export const PcLogo = styled(Link)`
@@ -39,5 +25,23 @@ export const PcLogo = styled(Link)`
 	font-weight: bold;
 	font-family: 'S-CoreDream-3Light';
 
+	color: white;
+`;
+
+export const IconButton = styled(Popconfirm)``;
+
+export const UserName = styled(Typography)`
+	position: absolute;
+	right: 60px;
+
+	color: white;
+`;
+
+export const ConfirmAlert = styled.a``;
+
+export const LogoutIcon = styled(UserDeleteOutlined)`
+	font-size: 20px;
+	font-weight: bold;
+	font-family: 'S-CoreDream-3Light';
 	color: white;
 `;

@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as userActions from 'stores/user';
 
@@ -11,6 +11,9 @@ import * as styled from './styled';
 export default function PcHeader() {
 	const history = useHistory();
 	const dispatch = useDispatch();
+
+	const logined = useSelector((state) => state?.user?.toJS().logined);
+	const name = logined?.user?.name;
 
 	const { onLogout } = bindActionCreators(userActions, dispatch);
 
@@ -29,6 +32,7 @@ export default function PcHeader() {
 					okText="로그아웃"
 					cancelText="취소"
 				>
+					<styled.UserName>{name}님</styled.UserName>
 					<styled.ConfirmAlert href="#">
 						<styled.LogoutIcon />
 					</styled.ConfirmAlert>

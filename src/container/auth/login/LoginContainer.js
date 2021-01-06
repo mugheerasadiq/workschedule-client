@@ -22,7 +22,8 @@ export default function AuthLoginContainer() {
 	});
 	const [message, setMessage] = useState('');
 
-	const { done, error } = useSelector((state) => state?.auth?.toJS().login);
+	const login = useSelector((state) => state?.auth?.toJS().login);
+	const { done, error } = login;
 
 	const { onLogin } = bindActionCreators(authActions, dispatch);
 
