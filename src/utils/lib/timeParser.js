@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { getTimestamp, parseAndReturnTimeStamp } from './getTimeStamps';
 
 export const onFilterRangeTime = (hour, minute) => {
 	const intHour = parseInt(hour, 10) || 0;
@@ -27,6 +28,24 @@ export const getTimeFromTags = (hour, minute) => {
 	);
 
 	return time.toString();
+};
 
-	// table time format => yyyy-mm-dd hh:mm:ss
+export const combineDateAndTags = (date, time) => {
+	const { year, month, day } = getTimestamp(date);
+	const { hours, minutes } = parseAndReturnTimeStamp(time);
+
+	const parsedTime = moment(
+		`${year}-${month}-${day} ${hours}:${minutes}:00`,
+		`YYYY-MM-DD hh:mm:ss`,
+		'kr',
+	);
+
+	return parsedTime.toString();
+};
+
+export const getTimePickerDate = (date) => {
+	const { year, month } = getTimestamp(date);
+	console.log(`year, month`, year, month);
+
+	return { year, month };
 };

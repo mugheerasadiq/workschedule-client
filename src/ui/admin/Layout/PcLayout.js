@@ -18,25 +18,20 @@ const menus = [
 	{
 		id: '0',
 		href: '/admin',
-		message: '조회 및 삭제',
+		message: '조회, 생성 및 삭제',
 	},
 	{
 		id: '1',
-		href: '/admin/work/create',
-		message: '생성',
-	},
-	{
-		id: '2',
 		href: '/admin/user/view',
 		message: '사원리스트 조회',
 	},
 	{
-		id: '3',
+		id: '2',
 		href: '/admin/user/confirm',
 		message: '유저 승인',
 	},
 	{
-		id: '4',
+		id: '3',
 		href: '/admin/time',
 		message: '조회, 생성 및 삭제',
 	},
@@ -81,7 +76,7 @@ export default function PcLayout({ children }) {
 				<styled.PcSider className="site-layout-background">
 					<styled.PcMenu
 						mode="inline"
-						defaultSelectedKeys={id || ['1']}
+						defaultSelectedKeys={id || ['0']}
 					>
 						<styled.PcSubMenu
 							icon={<ScheduleOutlined />}
@@ -92,21 +87,16 @@ export default function PcLayout({ children }) {
 									{menus[0].message}
 								</Link>
 							</styled.PcItem>
+						</styled.PcSubMenu>
+						<styled.PcSubMenu icon={<TeamOutlined />} title="사원">
 							<styled.PcItem key={menus[1].id}>
 								<Link to={menus[1].href}>
 									{menus[1].message}
 								</Link>
 							</styled.PcItem>
-						</styled.PcSubMenu>
-						<styled.PcSubMenu icon={<TeamOutlined />} title="사원">
 							<styled.PcItem key={menus[2].id}>
 								<Link to={menus[2].href}>
 									{menus[2].message}
-								</Link>
-							</styled.PcItem>
-							<styled.PcItem key={menus[3].id}>
-								<Link to={menus[3].href}>
-									{menus[3].message}
 								</Link>
 							</styled.PcItem>
 						</styled.PcSubMenu>
@@ -114,9 +104,9 @@ export default function PcLayout({ children }) {
 							icon={<ProfileOutlined />}
 							title="시간대"
 						>
-							<styled.PcItem key={menus[4].id}>
-								<Link to={menus[4].href}>
-									{menus[4].message}
+							<styled.PcItem key={menus[3].id}>
+								<Link to={menus[3].href}>
+									{menus[3].message}
 								</Link>
 							</styled.PcItem>
 						</styled.PcSubMenu>
