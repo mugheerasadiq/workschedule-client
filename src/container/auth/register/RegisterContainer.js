@@ -14,7 +14,7 @@ export default function AuthRegisterContainer() {
 
 	const done = useSelector((state) => state?.auth?.toJS().register?.done);
 
-	const { onRegister, onReset } = bindActionCreators(authActions, dispatch);
+	const { onRegister } = bindActionCreators(authActions, dispatch);
 
 	const [input, setInput] = useState({
 		companyId: '',
@@ -45,7 +45,6 @@ export default function AuthRegisterContainer() {
 	useEffect(() => {
 		if (!done) return;
 		history.replace('/auth/login');
-		onReset();
 	}, [done]);
 
 	// Issue

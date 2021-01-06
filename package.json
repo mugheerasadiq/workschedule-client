@@ -3,8 +3,9 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"@toast-ui/react-calendar": "^1.0.5",
 		"antd": "^4.9.2",
-		"axios": "^0.21.0",
+		"axios": "^0.21.1",
 		"immutable": "^4.0.0-rc.12",
 		"moment": "^2.29.1",
 		"react": "^17.0.1",

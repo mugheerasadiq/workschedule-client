@@ -1,7 +1,7 @@
 import { TYPE_DONE, TYPE_ERROR } from '../type';
 
 export const WORK_TYPES = {
-	RESET: 'work/RESET',
+	SET_RESET: 'work/SET_RESET',
 
 	GET_WORK: 'work/GET_WORK',
 	GET_WORK_DONE: TYPE_DONE('work/GET_WORK'),

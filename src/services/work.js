@@ -8,10 +8,11 @@ export const getWork = async ({ id, accessToken }) => {
 	return response;
 };
 
-export const getWorks = async ({ accessToken }) => {
+export const getWorks = async ({ year, month, accessToken }) => {
 	const url = '/works';
 	const headers = Request.getAuthorizationHeader(accessToken);
-	const response = await Request.onRequestGet({ url, headers });
+	const query = { year, month };
+	const response = await Request.onRequestGet({ url, query, headers });
 
 	return response;
 };

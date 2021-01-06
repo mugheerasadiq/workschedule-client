@@ -12,9 +12,9 @@ import {
 	getAccessToken,
 } from '../redux';
 
-export const onReset = ({ dispatch }) => {
+export const setReset = ({ dispatch, _ }, payload) => {
 	console.log('works Reset...');
-	dispatch(WORK_TYPES.RESET);
+	return dispatch({ type: WORK_TYPES.SET_RESET, payload });
 };
 
 export const onGetWork = createPromiseThunk(
@@ -33,26 +33,28 @@ export const onUpdateWorks = createPromiseThunk(
 	WORK_TYPES.UPDATE_WORKS,
 	workApi.updateWorks,
 	getAccessToken,
-	{ after: [onReset] },
+	{ after: [(props) => setReset(props, 'updated')] },
 );
 
 export const onCreateWorks = createPromiseThunk(
 	WORK_TYPES.CREATE_WORKS,
 	workApi.createWorks,
 	getAccessToken,
+	{ after: [(props) => setReset(props, 'created')] },
 );
 
 export const onDeleteWorks = createPromiseThunk(
 	WORK_TYPES.DELETE_WORKS,
 	workApi.deleteWorks,
 	getAccessToken,
-	{ after: [onReset] },
+	{ after: [(props) => setReset(props, 'deleted')] },
 );
 
 export default handleActions(
 	{
-		[WORK_TYPES.RESET]: (state, _) => {
-			return workState;
+		[WORK_TYPES.SET_RESET]: (state, action) => {
+			const type = action.payload;
+			return state.set(type, workState.get(type));
 		},
 		[WORK_TYPES.GET_WORK]: (state, _) => {
 			const loadingState = createPromiseState.loading();
@@ -71,7 +73,7 @@ export default handleActions(
 			return createImmutableState(state, 'works', loadingState);
 		},
 		[WORK_TYPES.GET_WORKS_DONE]: (state, action) => {
-			const doneState = createPromiseState.done(action?.payload);
+			const doneState = createPromiseState.done(action?.payload?.works);
 			return createImmutableState(state, 'works', doneState);
 		},
 		[WORK_TYPES.GET_WORKS_ERROR]: (state, action) => {

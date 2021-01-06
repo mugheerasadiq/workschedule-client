@@ -6,7 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as authActions from 'stores/auth';
+
 import { AuthInput } from 'components';
+import { loginErrorHandler } from 'utils';
 
 import * as styled from './styled';
 
@@ -18,6 +20,7 @@ export default function AuthLoginContainer() {
 		id: '',
 		password: '',
 	});
+	const [message, setMessage] = useState('');
 
 	const { done, error } = useSelector((state) => state?.auth?.toJS().login);
 
@@ -41,6 +44,12 @@ export default function AuthLoginContainer() {
 	const onClickRegister = useCallback(() => {
 		history.push('/auth/register');
 	}, []);
+
+	useEffect(() => {
+		if (!error) return null;
+
+		setMessage(loginErrorHandler(error));
+	}, [error]);
 
 	useEffect(() => {
 		if (!done) return;
@@ -72,13 +81,7 @@ export default function AuthLoginContainer() {
 					</styled.LoginButton>
 					{error !== null && (
 						<>
-							<styled.LoginError>
-								아이디 비밀번호 오류
-							</styled.LoginError>
-							<styled.LoginError>혹은</styled.LoginError>
-							<styled.LoginError>
-								관리자 승인이 되지 않았습니다.
-							</styled.LoginError>
+							<styled.LoginError>{message}</styled.LoginError>
 						</>
 					)}
 
