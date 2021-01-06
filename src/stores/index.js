@@ -12,6 +12,7 @@ const persistConfig = {
 	transforms: [immutableTransform()],
 	key: 'root',
 	storage,
+	whitelist: ['user'],
 };
 
 const rootReducer = combineReducers({

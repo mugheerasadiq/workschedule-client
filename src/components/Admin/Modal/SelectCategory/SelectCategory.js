@@ -17,7 +17,6 @@ export default function SelectCategory({ inputs, setInputs }) {
 				...inputs,
 				timeCategory: value.key,
 			});
-			console.log(`select`, inputs);
 		},
 		[inputs, setInputs],
 	);
