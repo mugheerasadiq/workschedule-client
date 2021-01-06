@@ -7,7 +7,7 @@ export const DatePickerWraper = styled.div`
 `;
 
 export const DatePickerToggle = styled(DatePicker)`
-	min-width: 15%;
+	min-width: 200px;
 `;
 
 export const DateSearchButton = styled(Button)``;

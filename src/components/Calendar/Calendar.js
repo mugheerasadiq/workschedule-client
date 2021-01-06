@@ -27,6 +27,7 @@ export default function Calendar({ tags = [], works = [] }) {
 		};
 	});
 
+	console.log(`tags`, tags);
 	return (
 		<ToastCalendar
 			calendars={tags}
