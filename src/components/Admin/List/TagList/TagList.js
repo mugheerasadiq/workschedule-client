@@ -52,7 +52,7 @@ function AdminTagItem({ tag = [], onClick }) {
 				setModal={setUpdateTagModal}
 			/>
 			<styled.TagItem>
-				<styled.ItemGroup>{`${name}조`}</styled.ItemGroup>
+				<styled.ItemGroup>{`${name}`}</styled.ItemGroup>
 				<styled.ItemTime>{`${startTime} ~ ${endTime}`}</styled.ItemTime>
 				<styled.EditButton
 					onClick={() =>

@@ -25,14 +25,14 @@ export default function UpdateCategoryModal({
 
 	useEffect(() => {
 		if (!id) return null;
+
 		setName(categoryName);
 	}, [id]);
 
 	const onChange = (e) => {
 		const { value } = e.target;
-		setName(value);
 
-		console.log(name);
+		setName(value);
 	};
 
 	const onCancel = useCallback(() => {

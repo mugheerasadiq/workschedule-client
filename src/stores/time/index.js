@@ -43,12 +43,17 @@ const getTagListObjectFromCategories = (categories) => {
 	return tagObject;
 };
 
+const setReset = ({ dispatch, _ }, payload) => {
+	console.log(`setReset...`, payload);
+	return dispatch({ type: TIME_TYPES.SET_RESET, payload });
+};
+
 const setTags = ({ dispatch, getState }) => {
 	const { timeCategories } = getState()?.time?.toJS().categories?.data;
 	const tagObject = getTagListObjectFromCategories(timeCategories);
 
 	console.log(`set Tags...`, tagObject);
-	dispatch({ type: TIME_TYPES.SET_TAGS, payload: tagObject });
+	return dispatch({ type: TIME_TYPES.SET_TAGS, payload: tagObject });
 };
 
 export const onGetCategories = createPromiseThunk(
@@ -62,40 +67,50 @@ export const onCreateCategory = createPromiseThunk(
 	TIME_TYPES.CREATE_CATEGORY,
 	timeApi.createCategory,
 	getAccessToken,
+	{ after: [(props) => setReset(props, 'created')] },
 );
 
 export const onUpdateCategory = createPromiseThunk(
 	TIME_TYPES.UPDATE_CATEGORY,
 	timeApi.updateCategory,
 	getAccessToken,
+	{ after: [(props) => setReset(props, 'updated')] },
 );
 
 export const onDeleteCategory = createPromiseThunk(
 	TIME_TYPES.DELETE_CATEGORY,
 	timeApi.deleteCategory,
 	getAccessToken,
+	{ after: [(props) => setReset(props, 'deleted')] },
 );
 
 export const onCreateTag = createPromiseThunk(
 	TIME_TYPES.CREATE_TAG,
 	timeApi.createTag,
 	getAccessToken,
+	{ after: [(props) => setReset(props, 'created')] },
 );
 
 export const onUpdateTag = createPromiseThunk(
 	TIME_TYPES.UPDATE_TAG,
 	timeApi.updateTag,
 	getAccessToken,
+	{ after: [(props) => setReset(props, 'updated')] },
 );
 
 export const onDeleteTag = createPromiseThunk(
 	TIME_TYPES.DELETE_TAG,
 	timeApi.deleteTag,
 	getAccessToken,
+	{ after: [(props) => setReset(props, 'deleted')] },
 );
 
 export default handleActions(
 	{
+		[TIME_TYPES.SET_RESET]: (state, action) => {
+			const type = action.payload;
+			return state.set(type, timeState.get(type));
+		},
 		[TIME_TYPES.GET_CATEGORIES]: (state, _) => {
 			const loadingState = createPromiseState.loading();
 			return createImmutableState(state, 'categories', loadingState);
@@ -166,7 +181,7 @@ export default handleActions(
 			return createImmutableState(state, 'created', loadingState);
 		},
 		[TIME_TYPES.CREATE_TAG_DONE]: (state, action) => {
-			const doneState = createPromiseState.done(action?.payload);
+			const doneState = createPromiseState.done();
 			return createImmutableState(state, 'created', doneState);
 		},
 		[TIME_TYPES.CREATE_TAG_ERROR]: (state, action) => {

@@ -42,6 +42,7 @@ export default function CreateTagModal({ modal, setModal }) {
 
 	useEffect(() => {
 		if (!done) return null;
+
 		setModal(false);
 		setInputs({ timeCategory: '', name: '', start: '', end: '' });
 		onGetCategories();

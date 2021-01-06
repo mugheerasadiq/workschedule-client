@@ -1,4 +1,4 @@
-import { createAction, handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 
 import {
 	createImmutableState,
@@ -22,7 +22,6 @@ const setReset = ({ dispatch, _ }, payload) => {
 	return dispatch({ type: AUTH_TYPES.RESET, payload });
 };
 
-export const onReset = createAction(AUTH_TYPES.RESET);
 export const onLogin = createPromiseThunk(AUTH_TYPES.LOGIN, authApi.login, {
 	after: [setUser, (props) => setReset(props, 'login')],
 });

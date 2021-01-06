@@ -4,9 +4,14 @@ import * as styled from './styled';
 import { getTimeFromTags } from 'utils';
 
 const setTimeInputs = (type = 'start', time) => {
-	const hourString = time[`${type}Hour`];
-	const minuteString = time[`${type}Minute`];
-	if (hourString?.length === 0 || minuteString?.length === 0) return '';
+	let hourString = time[`${type}Hour`];
+	let minuteString = time[`${type}Minute`];
+	if (hourString.length === 2 && hourString[0] === '0') {
+		hourString = hourString[1];
+	}
+	if (minuteString.length === 2 && minuteString[0] === '0') {
+		minuteString = minuteString[1];
+	}
 
 	const timeString = getTimeFromTags(hourString, minuteString);
 	return timeString;
