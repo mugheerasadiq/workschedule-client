@@ -45,7 +45,6 @@ export const combineDateAndTags = (date, time) => {
 
 export const getTimePickerDate = (date) => {
 	const { year, month } = getTimestamp(date);
-	console.log(`year, month`, year, month);
 
 	return { year, month };
 };

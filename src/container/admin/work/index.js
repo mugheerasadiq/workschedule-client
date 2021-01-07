@@ -1,1 +1,1 @@
-export { default as AdminGetWorksContainer } from './getWorks';
+export { default as AdminWorkContainer } from './WorkContainer';

@@ -1,18 +1,26 @@
 import React, { useState, useCallback } from 'react';
 import * as styled from './styled';
 
-import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+
+import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as workActions from 'stores/work';
 
 import { getTimePickerDate } from 'utils';
+import locale from 'antd/lib/locale/ko_KR';
 
 export default function DatePickerComponent() {
+	const history = useHistory();
+
 	const [date, setDate] = useState({
 		year: null,
 		month: null,
 	});
+	const logined = useSelector((state) => state?.user?.toJS().logined);
+	const role = logined?.user?.role;
+
 	const dispatch = useDispatch();
 
 	const { onGetWorks } = bindActionCreators(workActions, dispatch);
@@ -23,11 +31,18 @@ export default function DatePickerComponent() {
 	}, []);
 
 	const onClick = useCallback(() => {
+		if (role === 'user') {
+			history.push(`/main?year=${date.year}&month=${date.month}`);
+		} else if (role === 'admin') {
+			history.push(`/admin?year=${date.year}&month=${date.month}`);
+		}
 		onGetWorks(date);
 	}, [date]);
+
 	return (
 		<styled.DatePickerWraper>
 			<styled.DatePickerToggle
+				locale={locale}
 				size="large"
 				onChange={onChange}
 				picker="month"
