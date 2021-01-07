@@ -1,1 +1,1 @@
-export { default as AdminGetWorksPage } from './getWorks';
+export { default as AdminWorkPage } from './WorkPage';

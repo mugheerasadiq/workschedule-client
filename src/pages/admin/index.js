@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 // pages
 import { AdminUserPage } from './user';
-import { AdminGetWorksPage } from './work';
+import { AdminWorkPage } from './work';
 import { AdminTimePage } from './time';
 
 // ui
@@ -21,7 +21,7 @@ export default function AdminPage() {
 			<Switch>
 				<Route path="/admin/user" component={AdminUserPage} />
 				<Route path="/admin/time" component={AdminTimePage} />
-				<Route path="/admin" component={AdminGetWorksPage} />
+				<Route path="/admin" component={AdminWorkPage} />
 			</Switch>
 		</AdminLayout>
 	);
