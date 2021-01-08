@@ -50,7 +50,7 @@ export default handleActions(
 				.setIn(['logined', 'loginTime'], new Date());
 		},
 		[USER_TYPES.LOGOUT]: (state, _) => {
-			return userState;
+			return state;
 		},
 		[USER_TYPES.GET_USER]: (state, _) => {
 			const loadingState = createPromiseState.loading();

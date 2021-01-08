@@ -19,7 +19,9 @@ export default function AdminWorkContainer() {
 		users: state?.user?.toJS().users,
 	}));
 
-	const userList = users?.data?.map((user) => {
+	const userData = users?.data || [];
+
+	const userList = userData.map((user) => {
 		return {
 			key: user?.id,
 			name: user?.name,
