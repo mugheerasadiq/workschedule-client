@@ -19,19 +19,19 @@ export default function AdminWorkContainer() {
 		users: state?.user?.toJS().users,
 	}));
 
-	const userData = users?.data || [];
+	// const userData = users?.data || [];
 
-	const userList = userData.map((user) => {
-		return {
-			key: user?.id,
-			name: user?.name,
-		};
-	});
+	// const userList = userData.map((user) => {
+	// 	return {
+	// 		key: user?.id,
+	// 		name: user?.name,
+	// 	};
+	// });
 
 	return (
 		<>
 			<DatePicker />
-			<Schedule users={userList} />
+			<Schedule users={[]} />
 		</>
 	);
 }
