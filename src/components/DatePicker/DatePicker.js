@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import * as workActions from 'stores/work';
 
 import { getTimePickerDate } from 'utils';
+import Request from 'services/request';
 import locale from 'antd/lib/locale/ko_KR';
 
 export default function DatePickerComponent() {
@@ -31,11 +32,14 @@ export default function DatePickerComponent() {
 	}, []);
 
 	const onClick = useCallback(() => {
+		const queryString = Request.onQuery(date);
+
 		if (role === 'user') {
-			history.push(`/main?year=${date.year}&month=${date.month}`);
+			history.push(`/main${queryString}`);
 		} else if (role === 'admin') {
-			history.push(`/admin?year=${date.year}&month=${date.month}`);
+			history.push(`/admin${queryString}`);
 		}
+
 		onGetWorks(date);
 	}, [date]);
 
