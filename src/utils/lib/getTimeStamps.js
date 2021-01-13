@@ -1,5 +1,3 @@
-import { timeState } from 'stores/time/state';
-
 export const getTimestamp = (timestamp) => {
 	const date = new Date(timestamp);
 	const year = date.getFullYear();

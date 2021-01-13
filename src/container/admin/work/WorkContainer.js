@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { Button } from 'antd';
+import React, { useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import * as workActions from 'stores/work';
-import * as userActions from 'stores/user';
+import { useSelector } from 'react-redux';
 
 import { DatePicker, Schedule } from 'components';
-import { getQueryStringObject, getDayOfMonth, getDayOfDate } from 'utils';
+import {
+	getQueryStringObject,
+	getDayOfMonth,
+	getDayOfDate,
+	renderTagList,
+} from 'utils';
 
 export default function AdminWorkContainer() {
 	const history = useHistory();
@@ -20,8 +20,6 @@ export default function AdminWorkContainer() {
 	const dataSource = [];
 	const daySource = {};
 
-	const [tempTable, setTempTable] = useState(dataSource);
-
 	const { works, tags, users } = useSelector((state) => ({
 		works: state?.work?.toJS().works,
 		tags: state?.time?.toJS().tags,
@@ -29,6 +27,7 @@ export default function AdminWorkContainer() {
 	}));
 
 	const workList = works?.data;
+	const tagList = renderTagList(tags);
 	const userList = users?.data;
 	const done = works?.done;
 
@@ -64,7 +63,12 @@ export default function AdminWorkContainer() {
 	return (
 		<>
 			<DatePicker />
-			<Schedule dataSource={dataSource} done={done} day={day} />
+			<Schedule
+				dataSource={dataSource}
+				done={done}
+				day={day}
+				tagList={tagList}
+			/>
 		</>
 	);
 }

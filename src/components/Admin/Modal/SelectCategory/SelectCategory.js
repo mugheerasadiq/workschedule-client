@@ -24,8 +24,6 @@ export default function SelectCategory({ inputs, setInputs }) {
 	const defaultValue = useCallback(() => {
 		if (!inputs?.timeCategory) return null;
 
-		console.log(inputs?.timeCategory);
-
 		return inputs?.timeCategory;
 	}, [inputs]);
 

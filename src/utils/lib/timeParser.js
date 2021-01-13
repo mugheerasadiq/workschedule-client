@@ -18,6 +18,23 @@ export const onFilterRangeTime = (hour, minute) => {
 	};
 };
 
+export const timeToHHMM = (timeStamp) => {
+	const { hours, minutes } = getTimestamp(timeStamp);
+	const parsedHour = makeTimeFormat(hours);
+	const parsedMinute = makeTimeFormat(minutes);
+	return `${parsedHour}:${parsedMinute}`;
+};
+
+export const makeTimeFormat = (time) => {
+	const intTime = parseInt(time, 10) || 0;
+	let parsedTime = null;
+	if (intTime >= 0 && intTime < 10) {
+		parsedTime = `0${intTime}`;
+	} else parsedTime = intTime;
+
+	return parsedTime;
+};
+
 export const getTimeFromTags = (hour, minute) => {
 	const parsedTime = onFilterRangeTime(hour, minute);
 
