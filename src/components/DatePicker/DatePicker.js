@@ -34,10 +34,12 @@ export default function DatePickerComponent() {
 	const onClick = useCallback(() => {
 		const queryString = Request.onQuery(date);
 
+		if (!queryString) return null;
+
 		if (role === 'user') {
-			history.push(`/main${queryString}`);
+			history.replace(`/main${queryString}`);
 		} else if (role === 'admin') {
-			history.push(`/admin${queryString}`);
+			history.replace(`/admin${queryString}`);
 		}
 
 		onGetWorks(date);

@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import * as styled from './styled';
 
-import { useSelector } from 'react-redux';
+import { ScheduleInput } from 'components';
 
-export default function Schedule({ dataSource = [], done, day = '' }) {
+export default function Schedule({
+	dataSource = [],
+	done,
+	day = '',
+	tagList = [],
+}) {
 	const [tempTable, setTempTable] = useState(dataSource);
 
 	useEffect(() => {
@@ -13,16 +18,16 @@ export default function Schedule({ dataSource = [], done, day = '' }) {
 	}, [done]);
 
 	const onInputChange = useCallback(
-		(day, userIndex) => (e) => {
+		(day, userIndex) => (value) => {
 			const newData = [...tempTable];
-			newData[userIndex][day] = e.target.value;
+			newData[userIndex][day] = value;
 
 			setTempTable(newData);
+
+			console.log(`tempTable`, tempTable);
 		},
 		[tempTable],
 	);
-
-	const works = useSelector((state) => state?.work?.toJS().works);
 
 	const dataColumn = [
 		{
@@ -42,10 +47,13 @@ export default function Schedule({ dataSource = [], done, day = '' }) {
 			title: i,
 			align: 'center',
 			render: (value, text, index) => (
-				<styled.ScheduleInput
-					name={i}
+				<ScheduleInput
+					day={i}
+					userIndex={index}
 					value={value}
-					onChange={onInputChange(i, index)}
+					tagList={tagList}
+					onInputChange={onInputChange}
+					tempTable={tempTable}
 				/>
 			),
 		});
