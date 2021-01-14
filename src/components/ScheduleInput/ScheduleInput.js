@@ -3,7 +3,7 @@ import * as styled from './styled';
 
 import { Select } from 'antd';
 
-import { checkYesterdayTag } from 'utils';
+import { checkYesterdayTag, checkTomorrowTag } from 'utils';
 const { Option } = Select;
 
 export default function ScheduleInput({
@@ -18,11 +18,17 @@ export default function ScheduleInput({
 		onInputChange(day, userIndex)(value);
 	};
 
-	const checkedTagList = checkYesterdayTag(
+	const checkedYesterdayTag = checkYesterdayTag(
 		tempTable,
 		day,
 		userIndex,
 		tagList,
+	);
+	const checkedTomorrowTag = checkTomorrowTag(
+		tempTable,
+		day,
+		userIndex,
+		checkedYesterdayTag,
 	);
 
 	return (
@@ -32,7 +38,7 @@ export default function ScheduleInput({
 			showArrow={false}
 			onChange={onChange}
 		>
-			{checkedTagList?.map((tag) => (
+			{checkedTomorrowTag?.map((tag) => (
 				<Option key={tag.name} value={tag.name}>
 					{tag.name}
 				</Option>
