@@ -32,6 +32,8 @@ export const checkYesterdayTag = (table, day, userIndex, tagList) => {
 	const yesterday = table[userIndex][day - 1];
 	const yesterdayTag = getTagInform(yesterday, tagList);
 
+	if (!yesterdayTag) return tagList;
+
 	const checkedTagList = checkingTag(yesterdayTag, tagList);
 	return checkedTagList;
 };
@@ -41,6 +43,8 @@ export const getTagInform = (tagName, tagList) => {
 		return tag.name === tagName;
 	});
 
+	if (tag.length === 0) return null;
+
 	const tagInform = { ...tag[0] };
 
 	return tagInform;
@@ -48,19 +52,29 @@ export const getTagInform = (tagName, tagList) => {
 
 export const checkingTag = (yesterdayTag, tagList) => {
 	const checkedTagList = [];
+	const compare = (tag) => compareTime(yesterdayTag, tag);
 
 	tagList.forEach((tag) => {
-		checkedTagList.push(compareTime(yesterdayTag.end, tag.start));
+		if (!compare(tag)) return null;
+		else checkedTagList.push(compare(tag));
 	});
 
-	if (!checkedTagList) return tagList;
-	else return checkedTagList;
+	return checkedTagList;
 };
 
-export const compareTime = (endTime, startTime) => {
-	if (!endTime) return null;
+export const compareTime = (yesterdayTag, tag) => {
+	const start = new Date(`2021-01-02 ${tag.start}`);
+	let yesterdayStart = new Date(`2021-01-02 ${yesterdayTag.start}`);
+	let yesterdayEnd = new Date(`2021-01-02 ${yesterdayTag.end}`);
 
-	console.log(endTime, startTime);
+	if (yesterdayEnd.getHours() - yesterdayStart.getHours() > 0) {
+		yesterdayEnd = new Date(`2021-01-01 ${yesterdayTag.end}`);
+	}
 
-	return null;
+	console.log(yesterdayTag.name, yesterdayTag.end, yesterdayEnd);
+
+	yesterdayEnd.setHours(yesterdayEnd.getHours() + 10);
+
+	if (yesterdayEnd > start) return null;
+	else if (start >= yesterdayEnd) return tag;
 };

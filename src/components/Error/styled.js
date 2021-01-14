@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Result, Button } from 'antd';
 import 'antd.css';
 
@@ -13,6 +13,14 @@ export const ErrorPage = styled.div`
 	z-index: 6;
 
 	background-color: rgba(150, 150, 150, 0.2);
+
+	visibility: hidden;
+
+	${(props) =>
+		props.active &&
+		css`
+			visibility: visible;
+		`}
 `;
 export const ErrorWrapper = styled(Result)`
 	margin: 20vh auto;

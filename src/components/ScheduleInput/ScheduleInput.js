@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import * as styled from './styled';
 
 import { Select } from 'antd';
@@ -32,7 +32,7 @@ export default function ScheduleInput({
 			showArrow={false}
 			onChange={onChange}
 		>
-			{tagList?.map((tag) => (
+			{checkedTagList?.map((tag) => (
 				<Option key={tag.name} value={tag.name}>
 					{tag.name}
 				</Option>
