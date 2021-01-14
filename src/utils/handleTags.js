@@ -34,7 +34,7 @@ export const checkYesterdayTag = (table, day, userIndex, tagList) => {
 
 	if (!yesterdayTag) return tagList;
 
-	const checkedTagList = checkingTag(yesterdayTag, tagList);
+	const checkedTagList = sortYesterdayTag(yesterdayTag, tagList);
 	return checkedTagList;
 };
 
@@ -50,9 +50,9 @@ export const getTagInform = (tagName, tagList) => {
 	return tagInform;
 };
 
-export const checkingTag = (yesterdayTag, tagList) => {
+export const sortYesterdayTag = (yesterdayTag, tagList) => {
 	const checkedTagList = [];
-	const compare = (tag) => compareTime(yesterdayTag, tag);
+	const compare = (tag) => compareYesterdayTime(yesterdayTag, tag);
 
 	tagList.forEach((tag) => {
 		if (!compare(tag)) return null;
@@ -62,7 +62,7 @@ export const checkingTag = (yesterdayTag, tagList) => {
 	return checkedTagList;
 };
 
-export const compareTime = (yesterdayTag, tag) => {
+export const compareYesterdayTime = (yesterdayTag, tag) => {
 	const start = new Date(`2021-01-02 ${tag.start}`);
 	let yesterdayStart = new Date(`2021-01-02 ${yesterdayTag.start}`);
 	let yesterdayEnd = new Date(`2021-01-02 ${yesterdayTag.end}`);
@@ -71,10 +71,44 @@ export const compareTime = (yesterdayTag, tag) => {
 		yesterdayEnd = new Date(`2021-01-01 ${yesterdayTag.end}`);
 	}
 
-	console.log(yesterdayTag.name, yesterdayTag.end, yesterdayEnd);
-
 	yesterdayEnd.setHours(yesterdayEnd.getHours() + 10);
 
 	if (yesterdayEnd > start) return null;
 	else if (start >= yesterdayEnd) return tag;
+};
+
+export const checkTomorrowTag = (table, day, userIndex, tagList) => {
+	const tomorrow = table[userIndex][day + 1];
+	if (!tomorrow) return tagList;
+
+	const tomorrowTag = getTagInform(tomorrow, tagList);
+	const checkedTagList = sortTomorrowTag(tomorrowTag, tagList);
+	return checkedTagList;
+};
+
+export const sortTomorrowTag = (tomorrowTag, tagList) => {
+	const checkedTagList = [];
+	const compare = (tag) => compareTomorrowTime(tomorrowTag, tag);
+
+	tagList.forEach((tag) => {
+		if (!compare(tag)) return null;
+		else checkedTagList.push(compare(tag));
+	});
+
+	return checkedTagList;
+};
+
+export const compareTomorrowTime = (tomorrowTag, tag) => {
+	const start = new Date(`2021-01-02 ${tomorrowTag.start}`);
+	let todayStart = new Date(`2021-01-02 ${tag.start}`);
+	let todayEnd = new Date(`2021-01-02 ${tag.end}`);
+
+	if (todayEnd.getHours() - todayStart.getHours() > 0) {
+		todayEnd = new Date(`2021-01-01 ${tag.end}`);
+	}
+
+	todayEnd.setHours(todayEnd.getHours() + 10);
+
+	if (todayEnd > start) return null;
+	else if (start >= todayEnd) return tag;
 };
