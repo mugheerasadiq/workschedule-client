@@ -25,10 +25,10 @@ export const createWorks = async ({ accessToken, params }) => {
 	return response;
 };
 
-export const updateWorks = async ({ id, accessToken }) => {
+export const updateWorks = async ({ id, params, accessToken }) => {
 	const url = `/works/${id}`;
 	const headers = Request.getAuthorizationHeader(accessToken);
-	const response = await Request.onRequestPatch({ url, headers });
+	const response = await Request.onRequestPatch({ url, params, headers });
 
 	return response;
 };

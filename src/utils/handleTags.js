@@ -29,23 +29,26 @@ export const renderTagList = (tags = []) => {
 export const checkYesterdayTag = (table, day, userIndex, tagList) => {
 	if (day === 1) return null;
 
-	const yesterday = table[userIndex][day - 1];
-	const yesterdayTag = getTagInform(yesterday, tagList);
+	const yesterday = table[userIndex][day - 1]?.[1];
 
-	if (!yesterdayTag) return tagList;
+	if (!yesterday) return tagList;
+
+	const yesterdayTag = getTagInform(yesterday, tagList);
 
 	const checkedTagList = sortYesterdayTag(yesterdayTag, tagList);
 	return checkedTagList;
 };
 
 export const getTagInform = (tagName, tagList) => {
-	const tag = tagList.filter((tag) => {
+	const tag = tagList?.filter((tag) => {
 		return tag.name === tagName;
 	});
 
-	if (tag.length === 0) return null;
+	let tagInform = {};
 
-	const tagInform = { ...tag[0] };
+	if (tag?.length !== 0) {
+		tagInform = { ...tag?.[0] };
+	}
 
 	return tagInform;
 };
@@ -63,12 +66,12 @@ export const sortYesterdayTag = (yesterdayTag, tagList) => {
 };
 
 export const compareYesterdayTime = (yesterdayTag, tag) => {
-	const start = new Date(`2021-01-02 ${tag.start}`);
-	let yesterdayStart = new Date(`2021-01-02 ${yesterdayTag.start}`);
-	let yesterdayEnd = new Date(`2021-01-02 ${yesterdayTag.end}`);
+	const start = new Date(`2021-01-02 ${tag?.start}`);
+	let yesterdayStart = new Date(`2021-01-02 ${yesterdayTag?.start}`);
+	let yesterdayEnd = new Date(`2021-01-02 ${yesterdayTag?.end}`);
 
 	if (yesterdayEnd.getHours() - yesterdayStart.getHours() > 0) {
-		yesterdayEnd = new Date(`2021-01-01 ${yesterdayTag.end}`);
+		yesterdayEnd = new Date(`2021-01-01 ${yesterdayTag?.end}`);
 	}
 
 	yesterdayEnd.setHours(yesterdayEnd.getHours() + 10);
@@ -78,7 +81,7 @@ export const compareYesterdayTime = (yesterdayTag, tag) => {
 };
 
 export const checkTomorrowTag = (table, day, userIndex, tagList) => {
-	const tomorrow = table[userIndex][day + 1];
+	const tomorrow = table[userIndex][day + 1]?.[1];
 	if (!tomorrow) return tagList;
 
 	const tomorrowTag = getTagInform(tomorrow, tagList);
@@ -90,7 +93,7 @@ export const sortTomorrowTag = (tomorrowTag, tagList) => {
 	const checkedTagList = [];
 	const compare = (tag) => compareTomorrowTime(tomorrowTag, tag);
 
-	tagList.forEach((tag) => {
+	tagList?.forEach((tag) => {
 		if (!compare(tag)) return null;
 		else checkedTagList.push(compare(tag));
 	});
@@ -99,12 +102,12 @@ export const sortTomorrowTag = (tomorrowTag, tagList) => {
 };
 
 export const compareTomorrowTime = (tomorrowTag, tag) => {
-	const start = new Date(`2021-01-02 ${tomorrowTag.start}`);
-	let todayStart = new Date(`2021-01-02 ${tag.start}`);
-	let todayEnd = new Date(`2021-01-02 ${tag.end}`);
+	const start = new Date(`2021-01-02 ${tomorrowTag?.start}`);
+	let todayStart = new Date(`2021-01-02 ${tag?.start}`);
+	let todayEnd = new Date(`2021-01-02 ${tag?.end}`);
 
 	if (todayEnd.getHours() - todayStart.getHours() > 0) {
-		todayEnd = new Date(`2021-01-01 ${tag.end}`);
+		todayEnd = new Date(`2021-01-01 ${tag?.end}`);
 	}
 
 	todayEnd.setHours(todayEnd.getHours() + 10);
