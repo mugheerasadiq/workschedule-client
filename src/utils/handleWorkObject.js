@@ -49,7 +49,6 @@ export const checkStartAndEndDate = (year, month, day, startTime, endTime) => {
 		`YYYY-MM-DD`,
 		`kr`,
 	).toString();
-	console.log(`startDay`, startDay);
 
 	const end = moment(
 		`${year}-${month}-${endDay}`,

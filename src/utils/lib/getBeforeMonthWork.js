@@ -1,5 +1,3 @@
-import { getTimestamp } from './getTimeStamps';
-
 export const getBeforeMonthWork = (query) => {
 	const beforeLastDay = getLastDay(query);
 	const lastDay = beforeLastDay.getDate();

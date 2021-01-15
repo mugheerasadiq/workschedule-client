@@ -55,13 +55,13 @@ export default function Schedule({
 	const onInputChange = useCallback(
 		(day, userIndex) => (value) => {
 			const id = tempTable[userIndex][day]?.[0];
-			if (!value)
+			if (!value) {
 				setTryDelete({
 					userIndex,
 					day,
 					try: true,
 				});
-			else if (!id) {
+			} else if (!id) {
 				setTryCreate({
 					userIndex,
 					day,
@@ -76,7 +76,6 @@ export default function Schedule({
 					try: true,
 				});
 			}
-			console.log(value);
 
 			const newData = [...tempTable];
 			newData[userIndex][day] = [id || null, value];
@@ -115,7 +114,6 @@ export default function Schedule({
 			});
 		}
 
-		console.log(`create useEffect`);
 		const params = handleWorkObejct(
 			tagList,
 			queryString,
@@ -141,7 +139,6 @@ export default function Schedule({
 			try: true,
 		});
 
-		console.log(`udpate useEffect`, tryUpdate?.value);
 		const params = handleWorkObejct(
 			tagList,
 			queryString,
@@ -149,7 +146,7 @@ export default function Schedule({
 			tryUpdate?.value,
 			tempTable[userIndex]?.userId,
 		);
-		console.log(`params`, params);
+
 		onUpdateWorks({ id, params });
 		setTryUpdate({
 			try: false,
