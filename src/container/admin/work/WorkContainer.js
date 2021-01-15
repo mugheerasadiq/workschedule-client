@@ -51,10 +51,11 @@ export default function AdminWorkContainer() {
 			const day = getDayOfDate(work.start);
 			const userName = work?.user?.name;
 			const tagName = work?.tag?.name;
+			const id = work?.id;
 
 			dataSource?.forEach((data, index) => {
 				if (data?.name === userName) {
-					dataSource[index][day] = tagName;
+					dataSource[index][day] = [id, tagName];
 				}
 			});
 		});

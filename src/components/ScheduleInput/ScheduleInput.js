@@ -9,7 +9,7 @@ const { Option } = Select;
 export default function ScheduleInput({
 	day,
 	userIndex,
-	value = '',
+	value = [],
 	tagList = [],
 	onInputChange,
 	tempTable,
@@ -34,9 +34,10 @@ export default function ScheduleInput({
 	return (
 		<styled.TagSelect
 			showSearch
-			value={value}
+			value={value?.[1]}
 			showArrow={false}
 			onChange={onChange}
+			allowClear
 		>
 			{checkedTomorrowTag?.map((tag) => (
 				<Option key={tag.name} value={tag.name}>
