@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import * as styled from './styled';
 
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,6 +11,16 @@ import * as workActions from 'stores/work';
 import { ScheduleInput } from 'components';
 import { handleWorkObejct } from 'utils';
 
+// 상위로 올리셈. 상수인데 re-rendering 될 필요 없잖아
+const dataColumn = [
+	{
+		key: 'name',
+		dataIndex: 'name',
+		title: '이름',
+		align: 'center',
+	},
+];
+
 export default function Schedule({
 	dataSource = [],
 	done,
@@ -18,17 +28,19 @@ export default function Schedule({
 	tagList = [],
 }) {
 	const history = useHistory();
-	const queryString = history.location.search;
+	const location = useLocation();
+	const queryString = location.search;
+
+	// const queryString = history.location.search; => useLocation 쓸것
 	const dispatch = useDispatch();
 
-	const { created, updated } = useSelector((state) => ({
-		created: state?.work?.toJS().created,
-		updated: state?.work?.toJS().updated,
-	}));
-
+	const work = useSelector((state) => state.work?.toJS());
+	const { created, updated } = work;
 	const loading = created?.loading || updated?.loading;
 
 	const [tempTable, setTempTable] = useState(dataSource);
+
+	// 이게 뭘 뜻하는건데? 이거를 굳이 쓸 이유가 없다고 판단되는데
 	const [tryCreate, setTryCreate] = useState({
 		try: false,
 	});
@@ -50,7 +62,11 @@ export default function Schedule({
 		setTempTable(dataSource);
 	}, [done]);
 
-	useEffect(() => {}, []);
+	const onTryCreate = useCallback(() => {}, [tempTable]);
+
+	const onTryDelete = useCallback(() => {}, [tempTable]);
+
+	const onTryUpdate = useCallback(() => {}, [tempTable]);
 
 	const onInputChange = useCallback(
 		(day, userIndex) => (value) => {
@@ -61,6 +77,9 @@ export default function Schedule({
 					day,
 					try: true,
 				});
+
+				// 바로 onTryDelete -> useEffect를 굳이 안거칠 필요가 있다고 보는데
+				// 너무 useEffect랑 useState에 의존하는 경향이 있음.
 			} else if (!id) {
 				setTryCreate({
 					userIndex,
@@ -68,6 +87,7 @@ export default function Schedule({
 					value,
 					try: true,
 				});
+				// 바로 onTryCreate
 			} else {
 				setTryUpdate({
 					userIndex,
@@ -75,6 +95,8 @@ export default function Schedule({
 					value,
 					try: true,
 				});
+
+				// onTryUpdate
 			}
 
 			const newData = [...tempTable];
@@ -152,15 +174,6 @@ export default function Schedule({
 			try: false,
 		});
 	}, [updated?.loading, tryUpdate?.try]);
-
-	const dataColumn = [
-		{
-			key: 'name',
-			dataIndex: 'name',
-			title: '이름',
-			align: 'center',
-		},
-	];
 
 	for (let i = 1; i < day + 1; i++) {
 		if (!day) return null;
