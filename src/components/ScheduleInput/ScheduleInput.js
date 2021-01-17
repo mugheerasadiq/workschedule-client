@@ -15,7 +15,7 @@ export default function ScheduleInput({
 	tempTable,
 }) {
 	const onChange = (value) => {
-		onInputChange(day, userIndex)(value);
+		onInputChange(day, userIndex, value);
 	};
 
 	const checkedYesterdayTag = checkYesterdayTag(

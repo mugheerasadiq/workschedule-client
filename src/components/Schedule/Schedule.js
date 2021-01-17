@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import * as styled from './styled';
 
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,8 +11,7 @@ import * as workActions from 'stores/work';
 import { ScheduleInput } from 'components';
 import { handleWorkObejct } from 'utils';
 
-// 상위로 올리셈. 상수인데 re-rendering 될 필요 없잖아
-const dataColumn = [
+const column = [
 	{
 		key: 'name',
 		dataIndex: 'name',
@@ -27,29 +26,18 @@ export default function Schedule({
 	day = '',
 	tagList = [],
 }) {
-	const history = useHistory();
 	const location = useLocation();
+	const dispatch = useDispatch();
 	const queryString = location.search;
 
-	// const queryString = history.location.search; => useLocation 쓸것
-	const dispatch = useDispatch();
-
-	const work = useSelector((state) => state.work?.toJS());
+	const work = useSelector((state) => state?.work?.toJS());
 	const { created, updated } = work;
+
 	const loading = created?.loading || updated?.loading;
 
 	const [tempTable, setTempTable] = useState(dataSource);
 
-	// 이게 뭘 뜻하는건데? 이거를 굳이 쓸 이유가 없다고 판단되는데
-	const [tryCreate, setTryCreate] = useState({
-		try: false,
-	});
-	const [tryUpdate, setTryUpdate] = useState({
-		try: false,
-	});
-	const [tryDelete, setTryDelete] = useState({
-		try: false,
-	});
+	const dataColumn = [...column];
 
 	const { onCreateWorks, onUpdateWorks, onDeleteWorks } = bindActionCreators(
 		workActions,
@@ -62,41 +50,59 @@ export default function Schedule({
 		setTempTable(dataSource);
 	}, [done]);
 
-	const onTryCreate = useCallback(() => {}, [tempTable]);
+	const onTryCreate = useCallback(
+		(userIndex, day, value) => {
+			if (created?.loading) return null;
 
-	const onTryDelete = useCallback(() => {}, [tempTable]);
+			const params = handleWorkObejct(
+				tagList,
+				queryString,
+				day,
+				value,
+				tempTable[userIndex]?.userId,
+			);
+			onCreateWorks({ params });
+		},
+		[tempTable],
+	);
 
-	const onTryUpdate = useCallback(() => {}, [tempTable]);
+	const onTryUpdate = useCallback(
+		(userIndex, day, value) => {
+			if (updated?.loading) return null;
+
+			const id = tempTable[userIndex][day]?.[0];
+			const params = handleWorkObejct(
+				tagList,
+				queryString,
+				day,
+				value,
+				tempTable[userIndex]?.userId,
+			);
+			onUpdateWorks({ id, params });
+			console.log(`update...`, tempTable);
+		},
+		[tempTable],
+	);
+
+	const onTryDelete = useCallback(
+		(userIndex, day) => {
+			if (loading) return null;
+
+			const id = tempTable[userIndex][day]?.[0];
+			onDeleteWorks({ id });
+		},
+		[tempTable],
+	);
 
 	const onInputChange = useCallback(
-		(day, userIndex) => (value) => {
+		(day, userIndex, value) => {
 			const id = tempTable[userIndex][day]?.[0];
 			if (!value) {
-				setTryDelete({
-					userIndex,
-					day,
-					try: true,
-				});
-
-				// 바로 onTryDelete -> useEffect를 굳이 안거칠 필요가 있다고 보는데
-				// 너무 useEffect랑 useState에 의존하는 경향이 있음.
+				onTryDelete(userIndex, day);
 			} else if (!id) {
-				setTryCreate({
-					userIndex,
-					day,
-					value,
-					try: true,
-				});
-				// 바로 onTryCreate
+				onTryCreate(userIndex, day, value);
 			} else {
-				setTryUpdate({
-					userIndex,
-					day,
-					value,
-					try: true,
-				});
-
-				// onTryUpdate
+				onTryUpdate(userIndex, day, value);
 			}
 
 			const newData = [...tempTable];
@@ -106,74 +112,6 @@ export default function Schedule({
 		},
 		[tempTable],
 	);
-
-	useEffect(() => {
-		if (!tryDelete?.try || loading) return null;
-
-		const { userIndex, day } = tryDelete;
-		const id = tempTable[userIndex][day]?.[0];
-
-		onDeleteWorks({ id });
-		setTryDelete({
-			try: false,
-		});
-	}, [loading, tryDelete?.try]);
-
-	useEffect(() => {
-		if (!tryCreate?.try || created?.loading) return null;
-
-		const { userIndex, day } = tryCreate;
-		const id = tempTable[userIndex][day]?.[0];
-
-		if (id) {
-			setTryCreate({
-				try: false,
-			});
-			setTryUpdate({
-				userIndex,
-				day,
-				try: true,
-			});
-		}
-
-		const params = handleWorkObejct(
-			tagList,
-			queryString,
-			day,
-			tryCreate?.value,
-			tempTable[userIndex]?.userId,
-		);
-		onCreateWorks({ params });
-		setTryCreate({
-			try: false,
-		});
-	}, [created?.loading, tryCreate?.try]);
-
-	useEffect(() => {
-		if (!tryUpdate?.try || updated?.loading) return null;
-
-		const { userIndex, day } = tryUpdate;
-		const id = tempTable[userIndex][day]?.[0];
-
-		setTryUpdate({
-			userIndex,
-			day,
-			try: true,
-		});
-
-		const params = handleWorkObejct(
-			tagList,
-			queryString,
-			day,
-			tryUpdate?.value,
-			tempTable[userIndex]?.userId,
-		);
-
-		onUpdateWorks({ id, params });
-		setTryUpdate({
-			try: false,
-		});
-	}, [updated?.loading, tryUpdate?.try]);
 
 	for (let i = 1; i < day + 1; i++) {
 		if (!day) return null;
