@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -22,9 +22,9 @@ export default function AdminWorkPage() {
 		updated: state?.work?.toJS().updated,
 	}));
 
-	const history = useHistory();
+	const location = useLocation();
 	const dispatch = useDispatch();
-	const queryString = history.location.search;
+	const queryString = location.search;
 	const query = getQueryStringObject(queryString);
 
 	const { onGetWorks } = bindActionCreators(workActions, dispatch);
@@ -38,6 +38,7 @@ export default function AdminWorkPage() {
 
 	useEffect(() => {
 		if (!created?.done && !updated?.done) return null;
+
 		onGetWorks(query);
 	}, [created?.done, updated?.done]);
 

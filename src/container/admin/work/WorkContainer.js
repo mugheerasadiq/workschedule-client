@@ -17,9 +17,6 @@ export default function AdminWorkContainer() {
 	const query = getQueryStringObject(history.location.search);
 	const day = getDayOfMonth(query?.year, query?.month);
 
-	const dataSource = [];
-	const daySource = {};
-
 	const { works, tags, users } = useSelector((state) => ({
 		works: state?.work?.toJS().works,
 		tags: state?.time?.toJS().tags,
@@ -27,9 +24,13 @@ export default function AdminWorkContainer() {
 	}));
 
 	const workList = works?.data;
-	const tagList = renderTagList(tags);
 	const userList = users?.data;
 	const done = works?.done;
+
+	const tagList = renderTagList(tags);
+
+	const dataSource = [];
+	const daySource = {};
 
 	for (let i = 1; i < day + 1; i++) {
 		daySource[i] = null;
