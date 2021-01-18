@@ -3,7 +3,7 @@ import { Table, Input } from 'antd';
 
 export const ScheduleTable = styled(Table)`
 	width: 100%;
-	height: 10vh;
+	height: 50vh;
 
 	& .ant-table-thead > tr > th,
 	.ant-table-tbody > tr > td,

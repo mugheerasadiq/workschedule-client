@@ -20,5 +20,11 @@ const columns = [
 ];
 
 export default function UserList({ userList = [] }) {
-	return <styled.UserListTable columns={columns} dataSource={userList} />;
+	return (
+		<styled.UserListTable
+			columns={columns}
+			dataSource={userList}
+			scroll={{ y: 600 }}
+		/>
+	);
 }
