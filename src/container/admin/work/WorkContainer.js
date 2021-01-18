@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
@@ -45,21 +45,30 @@ export default function AdminWorkContainer() {
 		});
 	}
 
-	useEffect(() => {
-		if (!done) return null;
-
+	const onSetDataSource = () => {
 		workList?.forEach((work) => {
 			const day = getDayOfDate(work.start);
 			const userName = work?.user?.name;
 			const tagName = work?.tag?.name;
 			const id = work?.id;
 
+			const tag = tagList.filter((tag) => {
+				return tag?.name === tagName;
+			});
+			const time = tag[0]?.time;
+
 			dataSource?.forEach((data, index) => {
 				if (data?.name === userName) {
-					dataSource[index][day] = [id, tagName];
+					dataSource[index][day] = [id, tagName, time];
 				}
 			});
 		});
+	};
+
+	useEffect(() => {
+		if (!done) return null;
+
+		onSetDataSource();
 	}, [done]);
 
 	return (

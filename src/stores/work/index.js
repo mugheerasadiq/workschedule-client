@@ -17,15 +17,21 @@ export const setReset = ({ dispatch, _ }, payload) => {
 	return dispatch({ type: WORK_TYPES.SET_RESET, payload });
 };
 
-export const onGetWork = createPromiseThunk(
-	WORK_TYPES.GET_WORK,
-	workApi.getWork,
-	getAccessToken,
-);
-
 export const onGetWorks = createPromiseThunk(
 	WORK_TYPES.GET_WORKS,
 	workApi.getWorks,
+	getAccessToken,
+);
+
+export const onGetBeforeWorks = createPromiseThunk(
+	WORK_TYPES.GET_BEFORE_WORKS,
+	workApi.getBeforeWorks,
+	getAccessToken,
+);
+
+export const onGetAfterWorks = createPromiseThunk(
+	WORK_TYPES.GET_AFTER_WORKS,
+	workApi.getAfterWorks,
 	getAccessToken,
 );
 
@@ -56,18 +62,6 @@ export default handleActions(
 			const type = action.payload;
 			return state.set(type, workState.get(type));
 		},
-		[WORK_TYPES.GET_WORK]: (state, _) => {
-			const loadingState = createPromiseState.loading();
-			return createImmutableState(state, 'work', loadingState);
-		},
-		[WORK_TYPES.GET_WORK_DONE]: (state, action) => {
-			const doneState = createPromiseState.done(action?.payload);
-			return createImmutableState(state, 'work', doneState);
-		},
-		[WORK_TYPES.GET_WORK_ERROR]: (state, action) => {
-			const errorState = createPromiseState.error(action?.payload);
-			return createImmutableState(state, 'work', errorState);
-		},
 		[WORK_TYPES.GET_WORKS]: (state, _) => {
 			const loadingState = createPromiseState.loading();
 			return createImmutableState(state, 'works', loadingState);
@@ -79,6 +73,30 @@ export default handleActions(
 		[WORK_TYPES.GET_WORKS_ERROR]: (state, action) => {
 			const errorState = createPromiseState.error(action?.payload);
 			return createImmutableState(state, 'works', errorState);
+		},
+		[WORK_TYPES.GET_BEFORE_WORKS]: (state, _) => {
+			const loadingState = createPromiseState.loading();
+			return createImmutableState(state, 'before', loadingState);
+		},
+		[WORK_TYPES.GET_BEFORE_WORKS_DONE]: (state, action) => {
+			const doneState = createPromiseState.done(action?.payload?.works);
+			return createImmutableState(state, 'before', doneState);
+		},
+		[WORK_TYPES.GET_BEFORE_WORKS_ERROR]: (state, action) => {
+			const errorState = createPromiseState.error(action?.payload);
+			return createImmutableState(state, 'before', errorState);
+		},
+		[WORK_TYPES.GET_AFTER_WORKS]: (state, _) => {
+			const loadingState = createPromiseState.loading();
+			return createImmutableState(state, 'after', loadingState);
+		},
+		[WORK_TYPES.GET_AFTER_WORKS_DONE]: (state, action) => {
+			const doneState = createPromiseState.done(action?.payload?.works);
+			return createImmutableState(state, 'after', doneState);
+		},
+		[WORK_TYPES.GET_AFTER_WORKS_ERROR]: (state, action) => {
+			const errorState = createPromiseState.error(action?.payload);
+			return createImmutableState(state, 'after', errorState);
 		},
 		[WORK_TYPES.CREATE_WORKS]: (state, _) => {
 			const loadingState = createPromiseState.loading();

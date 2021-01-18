@@ -12,7 +12,7 @@ export const renderTagList = (tags = []) => {
 	}
 
 	tagList.forEach((tag) => {
-		const { id, name, start, end } = tag;
+		const { id, name, start, end, time } = tag;
 		const startTime = timeToHHMM(start);
 		const endTime = timeToHHMM(end);
 		parsedTagList.push({
@@ -20,10 +20,29 @@ export const renderTagList = (tags = []) => {
 			name,
 			start: startTime,
 			end: endTime,
+			time,
 		});
 	});
 
 	return parsedTagList;
+};
+
+export const getTimeDifference = (start, end) => {
+	const startDate = new Date(start);
+	const endDate = new Date(end);
+
+	const startHour = startDate.getHours();
+	const startMinutes = startDate.getMinutes();
+	const endHour = endDate.getHours();
+	const endMinutes = endDate.getMinutes();
+
+	let time = endHour + endMinutes / 60 - (startHour + startMinutes / 60);
+
+	if (time < 0) {
+		time = 24 + time;
+	}
+
+	return time;
 };
 
 export const checkYesterdayTag = (table, day, userIndex, tagList) => {

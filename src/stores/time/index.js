@@ -12,6 +12,8 @@ import {
 
 import * as timeApi from 'services/time';
 
+import { getTimeDifference } from 'utils';
+
 const getTagListObjectFromCategories = (categories) => {
 	if (!categories) return {};
 
@@ -22,6 +24,8 @@ const getTagListObjectFromCategories = (categories) => {
 			const tags = category?.timeTags;
 
 			tags.forEach((tag) => {
+				const time = getTimeDifference(tag?.start, tag?.end);
+				tag = { ...tag, time };
 				tagObject[category?.name].push({
 					...tag,
 					timeCategory: category?.name,
@@ -32,6 +36,8 @@ const getTagListObjectFromCategories = (categories) => {
 
 			const tags = category?.timeTags;
 			tags?.forEach((tag) => {
+				const time = getTimeDifference(tag?.start, tag?.end);
+				tag = { ...tag, time };
 				tagObject[category?.name].push({
 					...tag,
 					timeCategory: category?.name,

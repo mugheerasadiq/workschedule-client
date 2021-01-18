@@ -1,14 +1,24 @@
 import Request from './request';
 
-export const getWork = async ({ id, accessToken }) => {
-	const url = `/works/${id}`;
+export const getWorks = async ({ year, month, accessToken }) => {
+	const url = '/works';
 	const headers = Request.getAuthorizationHeader(accessToken);
-	const response = await Request.onRequestGet({ url, headers });
+	const query = { year, month };
+	const response = await Request.onRequestGet({ url, query, headers });
 
 	return response;
 };
 
-export const getWorks = async ({ year, month, accessToken }) => {
+export const getBeforeWorks = async ({ year, month, accessToken }) => {
+	const url = '/works';
+	const headers = Request.getAuthorizationHeader(accessToken);
+	const query = { year, month };
+	const response = await Request.onRequestGet({ url, query, headers });
+
+	return response;
+};
+
+export const getAfterWorks = async ({ year, month, accessToken }) => {
 	const url = '/works';
 	const headers = Request.getAuthorizationHeader(accessToken);
 	const query = { year, month };

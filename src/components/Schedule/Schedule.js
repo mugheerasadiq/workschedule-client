@@ -3,7 +3,7 @@ import * as styled from './styled';
 
 import { useLocation } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as workActions from 'stores/work';
@@ -30,11 +30,6 @@ export default function Schedule({
 	const dispatch = useDispatch();
 	const queryString = location.search;
 
-	const work = useSelector((state) => state?.work?.toJS());
-	const { created, updated } = work;
-
-	const loading = created?.loading || updated?.loading;
-
 	const [tempTable, setTempTable] = useState(dataSource);
 
 	const dataColumn = [...column];
@@ -52,8 +47,6 @@ export default function Schedule({
 
 	const onTryCreate = useCallback(
 		(userIndex, day, value) => {
-			if (created?.loading) return null;
-
 			const params = handleWorkObejct(
 				tagList,
 				queryString,
@@ -61,16 +54,16 @@ export default function Schedule({
 				value,
 				tempTable[userIndex]?.userId,
 			);
+
 			onCreateWorks({ params });
 		},
 		[tempTable],
 	);
 
 	const onTryUpdate = useCallback(
-		(userIndex, day, value) => {
-			if (updated?.loading) return null;
+		(userIndex, day, value, id) => {
+			if (!id) return null;
 
-			const id = tempTable[userIndex][day]?.[0];
 			const params = handleWorkObejct(
 				tagList,
 				queryString,
@@ -78,17 +71,16 @@ export default function Schedule({
 				value,
 				tempTable[userIndex]?.userId,
 			);
+
 			onUpdateWorks({ id, params });
-			console.log(`update...`, tempTable);
 		},
 		[tempTable],
 	);
 
 	const onTryDelete = useCallback(
-		(userIndex, day) => {
-			if (loading) return null;
+		(userIndex, day, id) => {
+			if (!id) return null;
 
-			const id = tempTable[userIndex][day]?.[0];
 			onDeleteWorks({ id });
 		},
 		[tempTable],
@@ -96,17 +88,20 @@ export default function Schedule({
 
 	const onInputChange = useCallback(
 		(day, userIndex, value) => {
+			console.log(`inputchange rendering...`);
 			const id = tempTable[userIndex][day]?.[0];
+			const time = tempTable[userIndex][day]?.[2];
+
 			if (!value) {
-				onTryDelete(userIndex, day);
+				onTryDelete(userIndex, day, id);
 			} else if (!id) {
 				onTryCreate(userIndex, day, value);
 			} else {
-				onTryUpdate(userIndex, day, value);
+				onTryUpdate(userIndex, day, value, id);
 			}
 
 			const newData = [...tempTable];
-			newData[userIndex][day] = [id || null, value];
+			newData[userIndex][day] = [id || null, value, time || null];
 
 			setTempTable(newData);
 		},
@@ -134,5 +129,11 @@ export default function Schedule({
 		});
 	}
 
-	return <styled.ScheduleTable columns={dataColumn} dataSource={tempTable} />;
+	return (
+		<styled.ScheduleTable
+			columns={dataColumn}
+			dataSource={tempTable}
+			scroll={{ y: 500 }}
+		/>
+	);
 }
