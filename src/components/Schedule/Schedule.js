@@ -78,7 +78,7 @@ export default function Schedule({
 	);
 
 	const onTryDelete = useCallback(
-		(userIndex, day, id) => {
+		(id) => {
 			if (!id) return null;
 
 			onDeleteWorks({ id });
@@ -88,12 +88,11 @@ export default function Schedule({
 
 	const onInputChange = useCallback(
 		(day, userIndex, value) => {
-			console.log(`inputchange rendering...`);
 			const id = tempTable[userIndex][day]?.[0];
 			const time = tempTable[userIndex][day]?.[2];
 
 			if (!value) {
-				onTryDelete(userIndex, day, id);
+				onTryDelete(id);
 			} else if (!id) {
 				onTryCreate(userIndex, day, value);
 			} else {

@@ -27,26 +27,8 @@ export const renderTagList = (tags = []) => {
 	return parsedTagList;
 };
 
-export const getTimeDifference = (start, end) => {
-	const startDate = new Date(start);
-	const endDate = new Date(end);
-
-	const startHour = startDate.getHours();
-	const startMinutes = startDate.getMinutes();
-	const endHour = endDate.getHours();
-	const endMinutes = endDate.getMinutes();
-
-	let time = endHour + endMinutes / 60 - (startHour + startMinutes / 60);
-
-	if (time < 0) {
-		time = 24 + time;
-	}
-
-	return time;
-};
-
 export const checkYesterdayTag = (table, day, userIndex, tagList) => {
-	if (day === 1) return null;
+	if (day === 1) return null; // 함수 만들기
 
 	const yesterday = table[userIndex][day - 1]?.[1];
 
@@ -56,6 +38,10 @@ export const checkYesterdayTag = (table, day, userIndex, tagList) => {
 
 	const checkedTagList = sortYesterdayTag(yesterdayTag, tagList);
 	return checkedTagList;
+};
+
+export const checkBeforeMonthTag = (tagList) => {
+	return tagList;
 };
 
 export const getTagInform = (tagName, tagList) => {
@@ -101,7 +87,7 @@ export const compareYesterdayTime = (yesterdayTag, tag) => {
 
 export const checkTomorrowTag = (table, day, userIndex, tagList) => {
 	const tomorrow = table[userIndex][day + 1]?.[1];
-	if (!tomorrow) return tagList;
+	if (!tomorrow) return tagList; // 함수 만들기
 
 	const tomorrowTag = getTagInform(tomorrow, tagList);
 	const checkedTagList = sortTomorrowTag(tomorrowTag, tagList);
