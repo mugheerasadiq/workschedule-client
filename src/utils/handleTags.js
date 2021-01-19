@@ -27,10 +27,17 @@ export const renderTagList = (tags = []) => {
 	return parsedTagList;
 };
 
-export const checkYesterdayTag = (table, day, userIndex, tagList) => {
-	if (day === 1) return null; // 함수 만들기
-
-	const yesterday = table[userIndex][day - 1]?.[1];
+export const checkYesterdayTag = (
+	table,
+	day,
+	userIndex,
+	tagList,
+	beforeSource,
+	beforeDay,
+) => {
+	let yesterday = null;
+	if (day === 1) yesterday = beforeSource[userIndex][beforeDay]?.[1];
+	else yesterday = table[userIndex][day - 1]?.[1];
 
 	if (!yesterday) return tagList;
 
@@ -38,10 +45,6 @@ export const checkYesterdayTag = (table, day, userIndex, tagList) => {
 
 	const checkedTagList = sortYesterdayTag(yesterdayTag, tagList);
 	return checkedTagList;
-};
-
-export const checkBeforeMonthTag = (tagList) => {
-	return tagList;
 };
 
 export const getTagInform = (tagName, tagList) => {
@@ -85,7 +88,13 @@ export const compareYesterdayTime = (yesterdayTag, tag) => {
 	else if (start >= yesterdayEnd) return tag;
 };
 
-export const checkTomorrowTag = (table, day, userIndex, tagList) => {
+export const checkTomorrowTag = (
+	table,
+	day,
+	userIndex,
+	tagList,
+	afterSource,
+) => {
 	const tomorrow = table[userIndex][day + 1]?.[1];
 	if (!tomorrow) return tagList; // 함수 만들기
 
