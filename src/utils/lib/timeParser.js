@@ -65,3 +65,21 @@ export const getTimePickerDate = (date) => {
 
 	return { year, month };
 };
+
+export const getTimeDifference = (start, end) => {
+	const startDate = new Date(start);
+	const endDate = new Date(end);
+
+	const startHour = startDate.getHours();
+	const startMinutes = startDate.getMinutes();
+	const endHour = endDate.getHours();
+	const endMinutes = endDate.getMinutes();
+
+	let time = endHour + endMinutes / 60 - (startHour + startMinutes / 60);
+
+	if (time < 0) {
+		time = 24 + time;
+	}
+
+	return time;
+};

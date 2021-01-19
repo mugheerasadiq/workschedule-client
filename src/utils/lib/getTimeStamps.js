@@ -20,7 +20,6 @@ export const parseAndReturnTimeStamp = (timestamp) => {
 };
 
 export const getBeforeMonthQuery = ({ year, month }) => {
-	console.log('rendering before');
 	const date = new Date(`${year}-${month}`);
 
 	date.setDate(date.getDate() - 1);
@@ -32,7 +31,6 @@ export const getBeforeMonthQuery = ({ year, month }) => {
 };
 
 export const getAfterMonthQuery = ({ year, month }) => {
-	console.log(`rendering after`);
 	const date = new Date(`${year}-${month}`);
 
 	date.setMonth(date.getMonth() + 2);
@@ -43,7 +41,7 @@ export const getAfterMonthQuery = ({ year, month }) => {
 	return { year: afterYear, month: afterMonth };
 };
 
-export const getDayOfMonth = (year, month) => {
+export const getDayOfMonth = ({ year, month }) => {
 	return new Date(year, month, 0).getDate();
 };
 
