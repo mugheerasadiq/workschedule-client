@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
+import * as styled from './styled';
 
 import { useLocation } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
-import { DatePicker, Schedule } from 'components';
+import { DatePicker, Schedule, TimeTable } from 'components';
 import {
 	getQueryStringObject,
 	getDayOfMonth,
@@ -104,14 +105,24 @@ export default function AdminWorkContainer() {
 	onSetDataSource(afterList, afterSource);
 
 	return (
-		<>
+		<styled.WorkContainer>
 			<DatePicker />
 			<Schedule
 				dataSource={dataSource}
+				beforeSource={beforeSource}
+				afterSource={afterSource}
 				done={done}
+				beforeDay={beforeDay}
 				day={day}
 				tagList={tagList}
 			/>
-		</>
+			{/* <TimeTable
+				dataSource={dataSource}
+				beforeSource={beforeSource}
+				afterSource={afterSource}
+				query={query}
+				done={done}
+			/> */}
+		</styled.WorkContainer>
 	);
 }

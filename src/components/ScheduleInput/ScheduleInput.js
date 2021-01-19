@@ -8,11 +8,14 @@ const { Option } = Select;
 
 export default function ScheduleInput({
 	day,
+	beforeDay,
 	userIndex,
 	value = [],
 	tagList = [],
 	onInputChange,
 	tempTable,
+	beforeSource = [],
+	afterSource = [],
 }) {
 	const onChange = (value) => {
 		onInputChange(day, userIndex, value);
@@ -23,12 +26,15 @@ export default function ScheduleInput({
 		day,
 		userIndex,
 		tagList,
+		beforeSource,
+		beforeDay,
 	);
 	const checkedTomorrowTag = checkTomorrowTag(
 		tempTable,
 		day,
 		userIndex,
 		checkedYesterdayTag,
+		afterSource,
 	);
 
 	return (

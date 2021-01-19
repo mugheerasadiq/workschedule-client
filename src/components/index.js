@@ -10,3 +10,4 @@ export * from './Calendar';
 export * from './DatePicker';
 export * from './Schedule';
 export * from './ScheduleInput';
+export * from './TimeTable';

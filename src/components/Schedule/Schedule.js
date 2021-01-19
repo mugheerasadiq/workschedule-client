@@ -22,8 +22,11 @@ const column = [
 
 export default function Schedule({
 	dataSource = [],
+	beforeSource = [],
+	afterSource = [],
 	done,
 	day = '',
+	beforeDay = '',
 	tagList = [],
 }) {
 	const location = useLocation();
@@ -118,11 +121,14 @@ export default function Schedule({
 			render: (value, text, index) => (
 				<ScheduleInput
 					day={i}
+					beforeDay={beforeDay}
 					userIndex={index}
 					value={value}
 					tagList={tagList}
 					onInputChange={onInputChange}
 					tempTable={tempTable}
+					beforeSource={beforeSource}
+					afterSource={afterSource}
 				/>
 			),
 		});
@@ -132,6 +138,7 @@ export default function Schedule({
 		<styled.ScheduleTable
 			columns={dataColumn}
 			dataSource={tempTable}
+			pagination={false}
 			scroll={{ y: 500 }}
 		/>
 	);

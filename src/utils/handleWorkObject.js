@@ -23,6 +23,7 @@ export const handleWorkObejct = (tagList, queryString, day, value, id) => {
 	const object = {
 		user: id,
 		timeTag: tag[0]?.id,
+		date: start,
 		start,
 		end,
 	};
