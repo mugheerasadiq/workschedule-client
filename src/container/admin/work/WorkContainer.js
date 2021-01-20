@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
-import { DatePicker, Schedule, TimeTable } from 'components';
+import { DatePicker, Schedule, TimeTable, TagTable } from 'components';
 import {
 	getQueryStringObject,
 	getDayOfMonth,
@@ -116,13 +116,16 @@ export default function AdminWorkContainer() {
 				day={day}
 				tagList={tagList}
 			/>
-			{/* <TimeTable
-				dataSource={dataSource}
-				beforeSource={beforeSource}
-				afterSource={afterSource}
-				query={query}
-				done={done}
-			/> */}
+			<styled.TableWrapper>
+				<TimeTable
+					dataSource={dataSource}
+					beforeSource={beforeSource}
+					afterSource={afterSource}
+					query={query}
+					done={done}
+				/>
+				<TagTable />
+			</styled.TableWrapper>
 		</styled.WorkContainer>
 	);
 }

@@ -11,3 +11,4 @@ export * from './DatePicker';
 export * from './Schedule';
 export * from './ScheduleInput';
 export * from './TimeTable';
+export * from './TagTable';
