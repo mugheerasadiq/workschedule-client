@@ -51,3 +51,10 @@ export const getDayOfDate = (timestamp) => {
 
 	return day;
 };
+
+export const getLastDay = (query) => {
+	const nowFirstDay = new Date(`${query?.year}-${query?.month}-01`);
+	nowFirstDay.setDate(nowFirstDay.getDate() - 1);
+
+	return nowFirstDay;
+};

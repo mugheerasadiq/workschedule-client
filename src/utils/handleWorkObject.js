@@ -45,17 +45,10 @@ export const checkStartAndEndDate = (year, month, day, startTime, endTime) => {
 	const startDay = startDateObject.day;
 	const endDay = endDateObject.day;
 
-	const start = moment(
-		`${year}-${month}-${startDay}`,
-		`YYYY-MM-DD`,
-		`kr`,
-	).toString();
+	moment.locale('ko');
 
-	const end = moment(
-		`${year}-${month}-${endDay}`,
-		`YYYY-MM-DD`,
-		`kr`,
-	).toString();
+	const start = moment(`${year}-${month}-${startDay}`).format(`YYYY-MM-DD`);
+	const end = moment(`${year}-${month}-${endDay}`).format(`YYYY-MM-DD`);
 
 	return { start, end };
 };

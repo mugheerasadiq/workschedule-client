@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import * as styled from './styled';
 
+import { getYYYYMMDD } from 'utils';
+
 const column = [
 	{
 		key: 'name',
@@ -14,6 +16,8 @@ export default function TimeTable({
 	dataSource = [],
 	beforeSource = [],
 	afterSource = [],
+	query,
+	done,
 }) {
 	const dataColumn = [...column];
 
