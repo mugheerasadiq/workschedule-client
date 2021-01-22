@@ -49,7 +49,7 @@ export default function AdminWorkContainer() {
 	};
 
 	const beforeDaySource = useMemo(
-		() => onPushDaySource(beforeDay - 6, beforeDay),
+		() => onPushDaySource(beforeDay - 5, beforeDay),
 		[queryString],
 	);
 	const daySource = onPushDaySource(1, day);
@@ -67,6 +67,7 @@ export default function AdminWorkContainer() {
 		}
 		return data;
 	};
+
 	const dataSource = onPushDataSource(daySource);
 	const beforeSource = onPushDataSource(beforeDaySource);
 	const afterSource = onPushDataSource(afterDaySource);
@@ -98,7 +99,7 @@ export default function AdminWorkContainer() {
 	useEffect(() => {
 		if (!done) return null;
 
-		onSetDataSource(workList, dataSource);
+		onSetDataSource(workList, dataSource, true);
 	}, [done]);
 
 	onSetDataSource(beforeList, beforeSource);
@@ -123,8 +124,9 @@ export default function AdminWorkContainer() {
 					afterSource={afterSource}
 					query={query}
 					done={done}
+					beforeDay={beforeDay}
 				/>
-				<TagTable />
+				<TagTable tagList={tagList} />
 			</styled.TableWrapper>
 		</styled.WorkContainer>
 	);
