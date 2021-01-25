@@ -103,7 +103,7 @@ export default function Schedule({
 			}
 
 			const newData = [...tempTable];
-			newData[userIndex][day] = [id || null, value, time || null];
+			newData[userIndex][day] = [id || null, value, time || 0];
 
 			setTempTable(newData);
 		},
