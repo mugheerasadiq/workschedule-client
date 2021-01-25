@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import * as styled from './styled';
 
 import { useLocation } from 'react-router-dom';
@@ -12,7 +12,27 @@ import {
 	getDayOfDate,
 	renderTagList,
 	getBeforeMonthQuery,
+	getAfterMonthQuery,
+	getIsoDate,
+	getIsoWeek,
+	getIsoWeeks,
 } from 'utils';
+
+const column = [
+	{
+		key: 'name',
+		dataIndex: 'name',
+		title: '이름',
+		align: 'center',
+	},
+];
+
+const timeColumn = (weeks, i) => ({
+	key: `${weeks[i]}`,
+	dataIndex: `${weeks[i]}`,
+	title: `${weeks[i]}번째 주`,
+	align: 'center',
+});
 
 export default function AdminWorkContainer() {
 	const location = useLocation();
@@ -21,7 +41,13 @@ export default function AdminWorkContainer() {
 		queryString,
 	]);
 	const day = useMemo(() => getDayOfMonth(query), [queryString]);
-	const beforeDay = getDayOfMonth(getBeforeMonthQuery(query));
+	const beforeMonthQuery = getBeforeMonthQuery(query);
+	const afterMonthQuery = getAfterMonthQuery(query);
+	const beforeDay = getDayOfMonth(beforeMonthQuery);
+
+	const dataColumn = [...column];
+
+	const [tempTimeSource, setTempTimeSource] = useState([]);
 
 	const { work, tags, users } = useSelector((state) => ({
 		work: state?.work?.toJS(),
@@ -35,10 +61,15 @@ export default function AdminWorkContainer() {
 	const beforeList = before?.data;
 	const afterList = after?.data;
 
-	const userList = users?.data;
+	const userList = users?.data.filter((user) => {
+		return user?.status === 'confirm';
+	});
 	const done = works?.done;
 
 	const tagList = renderTagList(tags);
+
+	const { startWeek, lastWeek } = getIsoDate(query);
+	const weeks = getIsoWeeks(startWeek, lastWeek);
 
 	const onPushDaySource = (start, end) => {
 		const source = {};
@@ -96,14 +127,60 @@ export default function AdminWorkContainer() {
 		[dataSource],
 	);
 
+	onSetDataSource(beforeList, beforeSource);
+	onSetDataSource(afterList, afterSource);
+
+	const onSetTimeColumnAndSource = useCallback(() => {
+		let timeKeyObejct = {};
+		const timeSource = [];
+		for (let i = 0; i < weeks?.length; i++) {
+			dataColumn.push(timeColumn(weeks, i));
+		}
+
+		const timeKeys = dataColumn.slice(1).map((data) => {
+			const dataIndex = data?.dataIndex;
+			return { [dataIndex]: 0 };
+		});
+
+		for (const [key, value] of Object.entries(timeKeys)) {
+			timeKeyObejct = { ...timeKeyObejct, ...value };
+		}
+
+		userList?.forEach((user) => {
+			timeSource.push({
+				name: user?.name,
+				...timeKeyObejct,
+			});
+		});
+		return timeSource;
+	}, [dataSource, query]);
+
+	const timeSource = onSetTimeColumnAndSource();
+
+	const setTimeSource = useCallback(
+		(dataSource, query) => {
+			dataSource?.forEach((data, userIndex) => {
+				for (const [key, value] of Object.entries(data)) {
+					const isoWeek = getIsoWeek(query, key);
+
+					if (isoWeek && value?.[2]) {
+						timeSource[userIndex][isoWeek] += value?.[2] || 0;
+					}
+				}
+			});
+		},
+		[dataSource, timeSource, query],
+	);
+
 	useEffect(() => {
 		if (!done) return null;
 
-		onSetDataSource(workList, dataSource, true);
-	}, [done]);
-
-	onSetDataSource(beforeList, beforeSource);
-	onSetDataSource(afterList, afterSource);
+		onSetDataSource(workList, dataSource);
+		setTimeSource(beforeSource, beforeMonthQuery);
+		setTimeSource(dataSource, query);
+		setTimeSource(afterSource, afterMonthQuery);
+		setTempTimeSource(timeSource);
+	}, [done, before?.done, after?.done, query]);
 
 	return (
 		<styled.WorkContainer>
@@ -119,12 +196,8 @@ export default function AdminWorkContainer() {
 			/>
 			<styled.TableWrapper>
 				<TimeTable
-					dataSource={dataSource}
-					beforeSource={beforeSource}
-					afterSource={afterSource}
-					query={query}
-					done={done}
-					beforeDay={beforeDay}
+					dataColumn={dataColumn}
+					timeSource={tempTimeSource}
 				/>
 				<TagTable tagList={tagList} />
 			</styled.TableWrapper>

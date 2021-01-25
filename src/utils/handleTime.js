@@ -45,12 +45,11 @@ export const getIsoWeeks = (startWeek, lastWeek) => {
 	return weeks;
 };
 
-export const getWeekTime = (
-	beforeDay,
-	weeks,
-	startDate,
-	lastDate,
-	date,
-	lastDay,
-	dataSource,
-) => {};
+export const getIsoWeek = (query, day) => {
+	const yearAndMonth = queryToString(query);
+	let parsedDay = `${day}`;
+	if (day < 10) parsedDay = `0${day}`;
+
+	const isoWeek = moment(`${yearAndMonth}-${parsedDay}`).isoWeek();
+	return isoWeek;
+};

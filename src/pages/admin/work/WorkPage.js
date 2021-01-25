@@ -18,13 +18,14 @@ import {
 } from 'utils';
 
 export default function AdminWorkPage() {
-	const { works, tags, users, created, updated } = useSelector((state) => ({
+	const { works, tags, users, work } = useSelector((state) => ({
 		works: state?.work?.toJS().works,
 		tags: state?.time?.toJS().tags,
 		users: state?.user?.toJS().users,
-		created: state?.work?.toJS().created,
-		updated: state?.work?.toJS().updated,
+		work: state?.work?.toJS(),
 	}));
+
+	const { created, updated, deleted } = work;
 
 	const location = useLocation();
 	const dispatch = useDispatch();
@@ -57,10 +58,10 @@ export default function AdminWorkPage() {
 	}, [queryString]);
 
 	useEffect(() => {
-		if (!created?.done && !updated?.done) return null;
+		if (!created?.done && !updated?.done && !deleted?.done) return null;
 
 		onGetWorks(query);
-	}, [created?.done, updated?.done]);
+	}, [created?.done, updated?.done, deleted?.done]);
 
 	const loading = tags?.loading || users?.loading;
 	const error = works?.error || tags?.error || users?.error;
