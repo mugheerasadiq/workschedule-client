@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const getTimestamp = (timestamp) => {
 	const date = new Date(timestamp);
 	const year = date.getFullYear();
@@ -20,23 +22,16 @@ export const parseAndReturnTimeStamp = (timestamp) => {
 };
 
 export const getBeforeMonthQuery = ({ year, month }) => {
-	const date = new Date(`${year}-${month}`);
-
-	date.setDate(date.getDate() - 1);
-
-	const beforeYear = date.getFullYear();
-	const beforeMonth = date.getMonth() + 1;
+	const beforeYear = moment(`${year}-${month}`).subtract(1, 'months').year();
+	const beforeMonth =
+		moment(`${year}-${month}`).subtract(1, 'months').month() + 1;
 
 	return { year: beforeYear, month: beforeMonth };
 };
 
 export const getAfterMonthQuery = ({ year, month }) => {
-	const date = new Date(`${year}-${month}`);
-
-	date.setMonth(date.getMonth() + 2);
-
-	const afterYear = date.getFullYear();
-	const afterMonth = date.getMonth();
+	const afterYear = moment(`${year}-${month}`).add(1, 'months').year();
+	const afterMonth = moment(`${year}-${month}`).add(1, 'months').month() + 1;
 
 	return { year: afterYear, month: afterMonth };
 };

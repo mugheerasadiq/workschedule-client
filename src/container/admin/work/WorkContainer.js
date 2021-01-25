@@ -16,6 +16,7 @@ import {
 	getIsoDate,
 	getIsoWeek,
 	getIsoWeeks,
+	getSundayTime,
 } from 'utils';
 
 const column = [
