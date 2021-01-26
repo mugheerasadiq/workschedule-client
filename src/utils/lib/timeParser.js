@@ -1,6 +1,8 @@
 import moment from 'moment';
 import { getTimestamp, parseAndReturnTimeStamp } from './getTimeStamps';
 
+moment.locale('ko');
+
 export const onFilterRangeTime = (hour, minute) => {
 	const intHour = parseInt(hour, 10) || 0;
 	const intMinute = parseInt(minute, 10) || 0;
@@ -40,9 +42,7 @@ export const getTimeFromTags = (hour, minute) => {
 
 	const time = moment(
 		`2021-01-01 ${parsedTime.hour}:${parsedTime.minute}:00`,
-		'YYYY-MM-DD hh:mm:ss',
-		'kr',
-	);
+	).format('YYYY-MM-DD HH:MM:SS');
 
 	return time.toString();
 };
