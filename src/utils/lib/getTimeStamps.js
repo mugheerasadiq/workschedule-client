@@ -53,3 +53,8 @@ export const getLastDay = (query) => {
 
 	return nowFirstDay;
 };
+
+export const getMomentDate = ({ year, month }) => {
+	const date = moment(`${year}-${month}-01`).format('YYYY-MM-DD');
+	return date;
+};

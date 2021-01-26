@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import * as styled from './styled';
 
 import { useHistory } from 'react-router-dom';
@@ -12,14 +12,17 @@ import { getTimePickerDate } from 'utils';
 import Request from 'services/request';
 import locale from 'antd/lib/locale/ko_KR';
 
-export default function DatePickerComponent() {
+export default function DatePickerComponent({ handleMonthView }) {
 	const history = useHistory();
 
 	const [date, setDate] = useState({
 		year: null,
 		month: null,
 	});
-	const logined = useSelector((state) => state?.user?.toJS().logined);
+	const { works, logined } = useSelector((state) => ({
+		works: state?.work?.toJS().works,
+		logined: state?.user?.toJS().logined,
+	}));
 	const role = logined?.user?.role;
 
 	const dispatch = useDispatch();
@@ -44,6 +47,11 @@ export default function DatePickerComponent() {
 
 		onGetWorks(date);
 	}, [date]);
+
+	useEffect(() => {
+		if (!works?.done || role !== 'user') return null;
+		handleMonthView();
+	}, [works?.done]);
 
 	return (
 		<styled.DatePickerWraper>
